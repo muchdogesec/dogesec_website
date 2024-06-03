@@ -1,0 +1,752 @@
+{
+    "type": "bundle",
+    "id": "bundle--2538b780-5423-47dd-aadf-55f8cfd9b71c",
+    "objects": [
+        {
+            "type": "marking-definition",
+            "spec_version": "2.1",
+            "id": "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+            "created": "2022-10-01T00:00:00.000Z",
+            "definition_type": "TLP:CLEAR",
+            "extensions": {
+                "extension-definition--60a3c5c5-0d10-413e-aab3-9e08dde9e88d": {
+                    "extension_type": "property-extension",
+                    "tlp_2_0": "clear"
+                }
+            }
+        },
+        {
+            "type": "marking-definition",
+            "spec_version": "2.1",
+            "id": "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created_by_ref": "identity--9779a2db-f98c-5f4b-8d08-8ee04e02dbb5",
+            "created": "2020-01-01T00:00:00.000Z",
+            "definition_type": "statement",
+            "definition": {
+                "statement": "This object was created using: https://github.com/muchdogesec/txt2stix"
+            },
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--97ba4e8b-04f6-57e8-8f6e-3a0f0a7dc0fb"
+            ]
+        },
+        {
+            "type": "identity",
+            "spec_version": "2.1",
+            "id": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created_by_ref": "identity--9779a2db-f98c-5f4b-8d08-8ee04e02dbb5",
+            "created": "2020-01-01T00:00:00.000Z",
+            "modified": "2020-01-01T00:00:00.000Z",
+            "name": "txt2stix",
+            "description": "https://github.com/muchdogsec/txt2stix",
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--97ba4e8b-04f6-57e8-8f6e-3a0f0a7dc0fb"
+            ],
+            "identity_class": "system",
+            "sectors": [
+                "technology"
+            ],
+            "contact_information": "https://www.dogesec.com/contact/"
+        },
+        {
+            "type": "report",
+            "spec_version": "2.1",
+            "id": "report--2538b780-5423-47dd-aadf-55f8cfd9b71c",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-05-30T07:25:56.354911Z",
+            "modified": "2024-05-30T07:25:56.354911Z",
+            "name": "FireEye APT39",
+            "description": "APT39: An Iranian Cyber\nEspionage Group Focused on\nPersonal Information\n\nJanuary 29, 2019\n\nSarah Hawley, Ben Read, Cristiana Brafman-Kittner, Nalani Fraser, Andrew\nThompson, Yuri Rozhansky, Sanaz Yashar\n\nOriginal report available at https://www.fireeye.com/blog/threatresearch/2019/01/apt39-iranian-cyber-espionage-group-focused-onpersonal-information.html\n\n\fIn December 2018, FireEye identified APT39 as an Iranian cyber espionage group\nresponsible for widespread theft of personal information. We have tracked activity linked to\nthis group since November 2014 in order to protect organizations from APT39 activity to\ndate. APT39\u2019s focus on the widespread theft of personal information sets it apart from\nother Iranian groups FireEye tracks, which have been linked to influence\noperations, disruptive attacks, and other threats. APT39 likely focuses on personal\ninformation to support monitoring, tracking, or surveillance operations that serve Iran\u2019s\nnational priorities, or potentially to create additional accesses and vectors to facilitate future\ncampaigns.\nAPT39 was created to bring together previous activities and methods used by this actor,\nand its activities largely align with a group publicly referred to as \"Chafer.\" However, there\nare differences in what has been publicly reported due to the variances in how\norganizations track activity. APT39 primarily leverages the SEAWEED and\nCACHEMONEY backdoors along with a specific variant of the POWBAT backdoor. While\nAPT39's targeting scope is global, its activities are concentrated in the Middle East. APT39\nhas prioritized the telecommunications sector, with additional targeting of the travel\nindustry and IT firms that support it and the high-tech industry. The countries and industries\ntargeted by APT39 are depicted in Figure 1.\n\nFigure 1: Countries and industries targeted by APT39\n\n\fOperational Intent\nAPT39's focus on the telecommunications and travel industries suggests intent to perform\nmonitoring, tracking, or surveillance operations against specific individuals, collect\nproprietary or customer data for commercial or operational purposes that serve strategic\nrequirements related to national priorities, or create additional accesses and vectors to\nfacilitate future campaigns. Government entities targeting suggests a potential secondary\nintent to collect geopolitical data that may benefit nation-state decision making. Targeting\ndata supports the belief that APT39's key mission is to track or monitor targets of interest,\ncollect personal information, including travel itineraries, and gather customer data from\ntelecommunications firms.\n\nIran Nexus Indicators\nWe have moderate confidence APT39 operations are conducted in support of Iranian\nnational interests based on regional targeting patterns focused in the Middle East,\ninfrastructure, timing, and similarities to APT34, a group that loosely aligns with activity\npublicly reported as \u201cOilRig\u201d. While APT39 and APT34 share some similarities, including\nmalware distribution methods, POWBAT backdoor use, infrastructure nomenclature, and\ntargeting overlaps, we consider APT39 to be distinct from APT34 given its use of a\ndifferent POWBAT variant. It is possible that these groups work together or share\nresources at some level.\n\nAttack Lifecycle\nAPT39 uses a variety of custom and publicly available malware and tools at all stages of\nthe attack lifecycle.\n\nInitial Compromise\nFor initial compromise, FireEye Intelligence has observed APT39 leverage spear phishing\nemails with malicious attachments and/or hyperlinks typically resulting in a POWBAT\ninfection. APT39 frequently registers and leverages domains that masquerade as\nlegitimate web services and organizations that are relevant to the intended target.\nFurthermore, this group has routinely identified and exploited vulnerable web servers of\ntargeted organizations to install web shells, such as ANTAK and ASPXSPY, and used\nstolen legitimate credentials to compromise externally facing Outlook Web Access (OWA)\nresources.\n\nEstablish Foothold, Escalate Privileges, and Internal Reconnaissance\nPost-compromise, APT39 leverages custom backdoors such as SEAWEED,\nCACHEMONEY, and a unique variant of POWBAT to establish a foothold in a target\nenvironment. During privilege escalation, freely available tools such as Mimikatz and\nNcrack have been observed, in addition to legitimate tools such as Windows Credential\nEditor and ProcDump. Internal reconnaissance has been performed using custom scripts\nand both freely available and custom tools such as the port scanner, BLUETORCH.\n\n\fLateral Movement, Maintain Presence, and Complete Mission\nAPT39 facilitates lateral movement through myriad tools such as Remote Desktop Protocol\n(RDP), Secure Shell (SSH), PsExec, RemCom, and xCmdSvc. Custom tools such as\nREDTRIP, PINKTRIP, and BLUETRIP have also been used to create SOCKS5 proxies\nbetween infected hosts. In addition to using RDP for lateral movement, APT39 has used\nthis protocol to maintain persistence in a victim environment. To complete its mission,\nAPT39 typically archives stolen data with compression tools such as WinRAR or 7-Zip.\n\nFigure 2: APT39 attack lifecycle\nThere are some indications that APT39 demonstrated a penchant for operational security\nto bypass detection efforts by network defenders, including the use of a modified version of\nMimikatz that was repacked to thwart anti-virus detection in one case, as well as another\ninstance when after gaining initial access APT39 performed credential harvesting outside\nof a compromised entity's environment to avoid detection.\n\nOutlook\nWe believe APT39's significant targeting of the telecommunications and travel industries\nreflects efforts to collect personal information on targets of interest and customer data for\nthe purposes of surveillance to facilitate future operations. Telecommunications firms are\nattractive targets given that they store large amounts of personal and customer\ninformation, provide access to critical infrastructure used for communications, and enable\naccess to a wide range of potential targets across multiple verticals. APT39's targeting not\nonly represents a threat to known targeted industries, but it extends to these organizations'\nclientele, which includes a wide variety of sectors and individuals on a global scale.\nAPT39's activity showcases Iran's potential global operational reach and how it uses cyber\noperations as a low-cost and effective tool to facilitate the collection of key data on\nperceived national security threats and gain advantages against regional and global rivals.\n\n\f",
+            "published": "2024-05-30T08:25:56.354875Z",
+            "object_refs": [
+                "course-of-action--d45f03a8-790a-4f90-b956-cd7e5b8886bf",
+                "attack-pattern--b17a1a56-e99c-403c-8948-561df0cffe81",
+                "course-of-action--65da1eb6-d35d-4853-b280-98a76c0aef53",
+                "attack-pattern--3f886f2a-874f-4333-b794-aa6075009b1c",
+                "attack-pattern--7385dfaf-6886-4229-9ecd-6fd678040830",
+                "intrusion-set--00f67a77-86a4-4adf-be26-1a54fc713340",
+                "relationship--70921d4a-2055-438c-8843-eb4e778391db",
+                "relationship--593da286-82cb-47e0-89ae-2668f7a2943e",
+                "relationship--e0c4dfab-77ed-47f1-a6d6-8c313d4c0c12",
+                "relationship--d1208b99-64fb-419f-90bb-8007339242db",
+                "relationship--f7dbc52a-dd70-4f89-a24a-5f7bb0d4ed1a",
+                "relationship--10c708fb-9f55-4b09-9a59-85e5aedd4ade",
+                "relationship--859e62a7-3760-4445-9df9-779bd38a312e"
+            ],
+            "confidence": 80,
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "description": "report--2538b780-5423-47dd-aadf-55f8cfd9b71c"
+                },
+                {
+                    "source_name": "txt2stix Report MD5",
+                    "external_id": "ede017d1952bcdb940abb1c1f6d65029"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "marking-definition",
+            "spec_version": "2.1",
+            "id": "marking-definition--e828b379-4e03-4974-9ac4-e53a884c97c1",
+            "created": "2022-10-01T00:00:00.000Z",
+            "definition_type": "TLP:RED",
+            "extensions": {
+                "extension-definition--60a3c5c5-0d10-413e-aab3-9e08dde9e88d": {
+                    "extension_type": "property-extension",
+                    "tlp_2_0": "red"
+                }
+            }
+        },
+        {
+            "type": "note",
+            "spec_version": "2.1",
+            "id": "note--478141c0-37d5-47ef-b260-506fec7c3950",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-05-30T07:25:56.354911Z",
+            "modified": "2024-05-30T07:25:56.354911Z",
+            "abstract": "txt2stix Config: report--2538b780-5423-47dd-aadf-55f8cfd9b71c",
+            "content": "WyJ0eHQyc3RpeC5weSIsICItLXJlbGF0aW9uc2hpcF9tb2RlIiwgImFpIiwgIi0taW5wdXRfZmlsZSIsICJ0ZXN0cy9pbnB1dHMvcmVhbF9pbnRlbF9yZXBvcnRzL0ZpcmVFeWVBUFQzOS50eHQiLCAiLS1uYW1lIiwgIkZpcmVFeWUgQVBUMzkiLCAiLS10bHBfbGV2ZWwiLCAiY2xlYXIiLCAiLS1jb25maWRlbmNlIiwgIjgwIiwgIi0tdXNlX2V4dHJhY3Rpb25zIiwgImFpX21pdHJlX2F0dGFja19lbnRlcnByaXNlIl0=",
+            "object_refs": [
+                "report--2538b780-5423-47dd-aadf-55f8cfd9b71c"
+            ],
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--2538b780-5423-47dd-aadf-55f8cfd9b71c"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--e828b379-4e03-4974-9ac4-e53a884c97c1",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "course-of-action",
+            "id": "course-of-action--d45f03a8-790a-4f90-b956-cd7e5b8886bf",
+            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "created": "2018-10-17T00:14:20.652Z",
+            "modified": "2021-04-05T19:21:28.924Z",
+            "name": "Valid Accounts Mitigation",
+            "description": "Take measures to detect or prevent techniques such as [OS Credential Dumping](https://attack.mitre.org/techniques/T1003) or installation of keyloggers to acquire credentials through [Input Capture](https://attack.mitre.org/techniques/T1056). Limit credential overlap across systems to prevent access if account credentials are obtained. Ensure that local administrator accounts have complex, unique passwords across all systems on the network. Do not put user or admin domain accounts in the local administrator groups across systems unless they are tightly controlled and use of accounts is segmented, as this is often equivalent to having a local administrator account with the same password on all systems. \n\nFollow best practices for design and administration of an enterprise network to limit privileged account use across administrative tiers. (Citation: Microsoft Securing Privileged Access) \n\nAudit domain and local accounts as well as their permission levels routinely to look for situations that could allow an adversary to gain wide access by obtaining credentials of a privileged account. (Citation: TechNet Credential Theft) (Citation: TechNet Least Privilege) These audits should also include if default accounts have been enabled, or if new local accounts are created that have not be authorized. \n\nApplications and appliances that utilize default username and password should be changed immediately after the installation, and before deployment to a production environment. (Citation: US-CERT Alert TA13-175A Risks of Default Passwords on the Internet) When possible, applications that use SSH keys should be updated periodically and properly secured. ",
+            "external_references": [
+                {
+                    "source_name": "mitre-attack",
+                    "url": "https://attack.mitre.org/mitigations/T1078",
+                    "external_id": "T1078"
+                },
+                {
+                    "source_name": "Microsoft Securing Privileged Access",
+                    "description": "Plett, C., Poggemeyer, L. (12, October 26). Securing Privileged Access Reference Material. Retrieved April 25, 2017.",
+                    "url": "https://docs.microsoft.com/en-us/windows-server/identity/securing-privileged-access/securing-privileged-access-reference-material#a-nameesaebmaesae-administrative-forest-design-approach"
+                },
+                {
+                    "source_name": "TechNet Credential Theft",
+                    "description": "Microsoft. (2016, April 15). Attractive Accounts for Credential Theft. Retrieved June 3, 2016.",
+                    "url": "https://technet.microsoft.com/en-us/library/dn535501.aspx"
+                },
+                {
+                    "source_name": "TechNet Least Privilege",
+                    "description": "Microsoft. (2016, April 16). Implementing Least-Privilege Administrative Models. Retrieved June 3, 2016.",
+                    "url": "https://technet.microsoft.com/en-us/library/dn487450.aspx"
+                },
+                {
+                    "source_name": "US-CERT Alert TA13-175A Risks of Default Passwords on the Internet",
+                    "description": "US-CERT. (n.d.). Risks of Default Passwords on the Internet. Retrieved April 12, 2019.",
+                    "url": "https://www.us-cert.gov/ncas/alerts/TA13-175A"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+            ],
+            "x_mitre_deprecated": true,
+            "x_mitre_domains": [
+                "enterprise-attack"
+            ],
+            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "x_mitre_version": "1.0"
+        },
+        {
+            "type": "attack-pattern",
+            "id": "attack-pattern--b17a1a56-e99c-403c-8948-561df0cffe81",
+            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "created": "2017-05-31T21:31:00.645Z",
+            "modified": "2023-03-30T21:01:51.631Z",
+            "name": "Valid Accounts",
+            "description": "Adversaries may obtain and abuse credentials of existing accounts as a means of gaining Initial Access, Persistence, Privilege Escalation, or Defense Evasion. Compromised credentials may be used to bypass access controls placed on various resources on systems within the network and may even be used for persistent access to remote systems and externally available services, such as VPNs, Outlook Web Access, network devices, and remote desktop.(Citation: volexity_0day_sophos_FW) Compromised credentials may also grant an adversary increased privilege to specific systems or access to restricted areas of the network. Adversaries may choose not to use malware or tools in conjunction with the legitimate access those credentials provide to make it harder to detect their presence.\n\nIn some cases, adversaries may abuse inactive accounts: for example, those belonging to individuals who are no longer part of an organization. Using these accounts may allow the adversary to evade detection, as the original account user will not be present to identify any anomalous activity taking place on their account.(Citation: CISA MFA PrintNightmare)\n\nThe overlap of permissions for local, domain, and cloud accounts across a network of systems is of concern because the adversary may be able to pivot across accounts and systems to reach a high level of access (i.e., domain or enterprise administrator) to bypass access controls set within the enterprise.(Citation: TechNet Credential Theft)",
+            "kill_chain_phases": [
+                {
+                    "kill_chain_name": "mitre-attack",
+                    "phase_name": "defense-evasion"
+                },
+                {
+                    "kill_chain_name": "mitre-attack",
+                    "phase_name": "persistence"
+                },
+                {
+                    "kill_chain_name": "mitre-attack",
+                    "phase_name": "privilege-escalation"
+                },
+                {
+                    "kill_chain_name": "mitre-attack",
+                    "phase_name": "initial-access"
+                }
+            ],
+            "external_references": [
+                {
+                    "source_name": "mitre-attack",
+                    "url": "https://attack.mitre.org/techniques/T1078",
+                    "external_id": "T1078"
+                },
+                {
+                    "source_name": "volexity_0day_sophos_FW",
+                    "description": "Adair, S., Lancaster, T., Volexity Threat Research. (2022, June 15). DriftingCloud: Zero-Day Sophos Firewall Exploitation and an Insidious Breach. Retrieved July 1, 2022.",
+                    "url": "https://www.volexity.com/blog/2022/06/15/driftingcloud-zero-day-sophos-firewall-exploitation-and-an-insidious-breach/"
+                },
+                {
+                    "source_name": "CISA MFA PrintNightmare",
+                    "description": "Cybersecurity and Infrastructure Security Agency. (2022, March 15). Russian State-Sponsored Cyber Actors Gain Network Access by Exploiting Default Multifactor Authentication Protocols and \u201cPrintNightmare\u201d Vulnerability. Retrieved March 16, 2022.",
+                    "url": "https://www.cisa.gov/uscert/ncas/alerts/aa22-074a"
+                },
+                {
+                    "source_name": "TechNet Credential Theft",
+                    "description": "Microsoft. (2016, April 15). Attractive Accounts for Credential Theft. Retrieved June 3, 2016.",
+                    "url": "https://technet.microsoft.com/en-us/library/dn535501.aspx"
+                },
+                {
+                    "source_name": "TechNet Audit Policy",
+                    "description": "Microsoft. (2016, April 15). Audit Policy Recommendations. Retrieved June 3, 2016.",
+                    "url": "https://technet.microsoft.com/en-us/library/dn487457.aspx"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+            ],
+            "x_mitre_attack_spec_version": "3.1.0",
+            "x_mitre_domains": [
+                "enterprise-attack"
+            ],
+            "x_mitre_contributors": [
+                "Syed Ummar Farooqh, McAfee",
+                "Prasad Somasamudram, McAfee",
+                "Sekhar Sarukkai, McAfee",
+                "Jon Sternstein, Stern Security",
+                "Yossi Weizman, Azure Defender Research Team",
+                "Netskope",
+                "Mark Wee",
+                "Praetorian",
+                "Goldstein Menachem"
+            ],
+            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "x_mitre_data_sources": [
+                "Logon Session: Logon Session Creation",
+                "User Account: User Account Authentication",
+                "Logon Session: Logon Session Metadata"
+            ],
+            "x_mitre_defense_bypassed": [
+                "Firewall",
+                "Anti-virus",
+                "Host Intrusion Prevention Systems",
+                "Network Intrusion Detection System",
+                "Application Control",
+                "System Access Controls"
+            ],
+            "x_mitre_deprecated": false,
+            "x_mitre_detection": "Configure robust, consistent account activity audit policies across the enterprise and with externally accessible services.(Citation: TechNet Audit Policy) Look for suspicious account behavior across systems that share accounts, either user, admin, or service accounts. Examples: one account logged into multiple systems simultaneously; multiple accounts logged into the same machine simultaneously; accounts logged in at odd times or outside of business hours. Activity may be from interactive login sessions or process ownership from accounts being used to execute binaries on a remote system as a particular account. Correlate other security systems with login information (e.g., a user has an active login session but has not entered the building or does not have VPN access).\n\nPerform regular audits of domain and local system accounts to detect accounts that may have been created by an adversary for persistence. Checks on these accounts could also include whether default accounts such as Guest have been activated. These audits should also include checks on any appliances and applications for default credentials or SSH keys, and if any are discovered, they should be updated immediately.",
+            "x_mitre_effective_permissions": [
+                "User",
+                "Administrator"
+            ],
+            "x_mitre_is_subtechnique": false,
+            "x_mitre_permissions_required": [
+                "User",
+                "Administrator"
+            ],
+            "x_mitre_platforms": [
+                "Windows",
+                "Azure AD",
+                "Office 365",
+                "SaaS",
+                "IaaS",
+                "Linux",
+                "macOS",
+                "Google Workspace",
+                "Containers",
+                "Network"
+            ],
+            "x_mitre_version": "2.6"
+        },
+        {
+            "type": "course-of-action",
+            "id": "course-of-action--65da1eb6-d35d-4853-b280-98a76c0aef53",
+            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "created": "2018-10-17T00:14:20.652Z",
+            "modified": "2019-07-24T19:21:22.911Z",
+            "name": "Exploit Public-Facing Application Mitigation",
+            "description": "Application isolation and least privilege help lesson the impact of an exploit. Application isolation will limit what other processes and system features the exploited target can access, and least privilege for service accounts will limit what permissions the exploited process gets on the rest of the system. Web Application Firewalls may be used to limit exposure of applications.\n\nSegment externally facing servers and services from the rest of the network with a DMZ or on separate hosting infrastructure.\n\nUse secure coding best practices when designing custom software that is meant for deployment to externally facing systems. Avoid issues documented by OWASP, CWE, and other software weakness identification efforts.\n\nRegularly scan externally facing systems for vulnerabilities and establish procedures to rapidly patch systems when critical vulnerabilities are discovered through scanning and through public disclosure.",
+            "external_references": [
+                {
+                    "source_name": "mitre-attack",
+                    "url": "https://attack.mitre.org/mitigations/T1190",
+                    "external_id": "T1190"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+            ],
+            "x_mitre_deprecated": true,
+            "x_mitre_domains": [
+                "enterprise-attack"
+            ],
+            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "x_mitre_version": "1.0"
+        },
+        {
+            "type": "attack-pattern",
+            "id": "attack-pattern--3f886f2a-874f-4333-b794-aa6075009b1c",
+            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "created": "2018-04-18T17:59:24.739Z",
+            "modified": "2023-04-14T22:18:39.190Z",
+            "name": "Exploit Public-Facing Application",
+            "description": "Adversaries may attempt to exploit a weakness in an Internet-facing host or system to initially access a network. The weakness in the system can be a software bug, a temporary glitch, or a misconfiguration.\n\nExploited applications are often websites/web servers, but can also include databases (like SQL), standard services (like SMB or SSH), network device administration and management protocols (like SNMP and Smart Install), and any other system with Internet accessible open sockets.(Citation: NVD CVE-2016-6662)(Citation: CIS Multiple SMB Vulnerabilities)(Citation: US-CERT TA18-106A Network Infrastructure Devices 2018)(Citation: Cisco Blog Legacy Device Attacks)(Citation: NVD CVE-2014-7169) Depending on the flaw being exploited this may also involve [Exploitation for Defense Evasion](https://attack.mitre.org/techniques/T1211). \n\nIf an application is hosted on cloud-based infrastructure and/or is containerized, then exploiting it may lead to compromise of the underlying instance or container. This can allow an adversary a path to access the cloud or container APIs, exploit container host access via [Escape to Host](https://attack.mitre.org/techniques/T1611), or take advantage of weak identity and access management policies.\n\nAdversaries may also exploit edge network infrastructure and related appliances, specifically targeting devices that do not support robust host-based defenses.(Citation: Mandiant Fortinet Zero Day)(Citation: Wired Russia Cyberwar)\n\nFor websites and databases, the OWASP top 10 and CWE top 25 highlight the most common web-based vulnerabilities.(Citation: OWASP Top 10)(Citation: CWE top 25)",
+            "kill_chain_phases": [
+                {
+                    "kill_chain_name": "mitre-attack",
+                    "phase_name": "initial-access"
+                }
+            ],
+            "external_references": [
+                {
+                    "source_name": "mitre-attack",
+                    "url": "https://attack.mitre.org/techniques/T1190",
+                    "external_id": "T1190"
+                },
+                {
+                    "source_name": "CWE top 25",
+                    "description": "Christey, S., Brown, M., Kirby, D., Martin, B., Paller, A.. (2011, September 13). 2011 CWE/SANS Top 25 Most Dangerous Software Errors. Retrieved April 10, 2019.",
+                    "url": "https://cwe.mitre.org/top25/index.html"
+                },
+                {
+                    "source_name": "CIS Multiple SMB Vulnerabilities",
+                    "description": "CIS. (2017, May 15). Multiple Vulnerabilities in Microsoft Windows SMB Server Could Allow for Remote Code Execution. Retrieved April 3, 2018.",
+                    "url": "https://www.cisecurity.org/advisory/multiple-vulnerabilities-in-microsoft-windows-smb-server-could-allow-for-remote-code-execution/"
+                },
+                {
+                    "source_name": "Wired Russia Cyberwar",
+                    "description": "Greenberg, A. (2022, November 10). Russia\u2019s New Cyberwarfare in Ukraine Is Fast, Dirty, and Relentless. Retrieved March 22, 2023.",
+                    "url": "https://www.wired.com/story/russia-ukraine-cyberattacks-mandiant/"
+                },
+                {
+                    "source_name": "Mandiant Fortinet Zero Day",
+                    "description": "Marvi, A. et al.. (2023, March 16). Fortinet Zero-Day and Custom Malware Used by Suspected Chinese Actor in Espionage Operation. Retrieved March 22, 2023.",
+                    "url": "https://www.mandiant.com/resources/blog/fortinet-malware-ecosystem"
+                },
+                {
+                    "source_name": "NVD CVE-2016-6662",
+                    "description": "National Vulnerability Database. (2017, February 2). CVE-2016-6662 Detail. Retrieved April 3, 2018.",
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2016-6662"
+                },
+                {
+                    "source_name": "NVD CVE-2014-7169",
+                    "description": "National Vulnerability Database. (2017, September 24). CVE-2014-7169 Detail. Retrieved April 3, 2018.",
+                    "url": "https://nvd.nist.gov/vuln/detail/CVE-2014-7169"
+                },
+                {
+                    "source_name": "Cisco Blog Legacy Device Attacks",
+                    "description": "Omar Santos. (2020, October 19). Attackers Continue to Target Legacy Devices. Retrieved October 20, 2020.",
+                    "url": "https://community.cisco.com/t5/security-blogs/attackers-continue-to-target-legacy-devices/ba-p/4169954"
+                },
+                {
+                    "source_name": "OWASP Top 10",
+                    "description": "OWASP. (2018, February 23). OWASP Top Ten Project. Retrieved April 3, 2018.",
+                    "url": "https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project"
+                },
+                {
+                    "source_name": "US-CERT TA18-106A Network Infrastructure Devices 2018",
+                    "description": "US-CERT. (2018, April 20). Russian State-Sponsored Cyber Actors Targeting Network Infrastructure Devices. Retrieved October 19, 2020.",
+                    "url": "https://us-cert.cisa.gov/ncas/alerts/TA18-106A"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+            ],
+            "x_mitre_attack_spec_version": "3.1.0",
+            "x_mitre_domains": [
+                "enterprise-attack"
+            ],
+            "x_mitre_contributors": [
+                "Yossi Weizman, Azure Defender Research Team",
+                "Praetorian"
+            ],
+            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "x_mitre_data_sources": [
+                "Network Traffic: Network Traffic Content",
+                "Application Log: Application Log Content"
+            ],
+            "x_mitre_deprecated": false,
+            "x_mitre_detection": "Monitor application logs for abnormal behavior that may indicate attempted or successful exploitation. Use deep packet inspection to look for artifacts of common exploit traffic, such as SQL injection. Web Application Firewalls may detect improper inputs attempting exploitation.",
+            "x_mitre_is_subtechnique": false,
+            "x_mitre_platforms": [
+                "Windows",
+                "IaaS",
+                "Network",
+                "Linux",
+                "macOS",
+                "Containers"
+            ],
+            "x_mitre_version": "2.4"
+        },
+        {
+            "type": "attack-pattern",
+            "id": "attack-pattern--7385dfaf-6886-4229-9ecd-6fd678040830",
+            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "created": "2017-05-31T21:30:49.546Z",
+            "modified": "2023-03-27T16:43:58.795Z",
+            "name": "Command and Scripting Interpreter",
+            "description": "Adversaries may abuse command and script interpreters to execute commands, scripts, or binaries. These interfaces and languages provide ways of interacting with computer systems and are a common feature across many different platforms. Most systems come with some built-in command-line interface and scripting capabilities, for example, macOS and Linux distributions include some flavor of [Unix Shell](https://attack.mitre.org/techniques/T1059/004) while Windows installations include the [Windows Command Shell](https://attack.mitre.org/techniques/T1059/003) and [PowerShell](https://attack.mitre.org/techniques/T1059/001).\n\nThere are also cross-platform interpreters such as [Python](https://attack.mitre.org/techniques/T1059/006), as well as those commonly associated with client applications such as [JavaScript](https://attack.mitre.org/techniques/T1059/007) and [Visual Basic](https://attack.mitre.org/techniques/T1059/005).\n\nAdversaries may abuse these technologies in various ways as a means of executing arbitrary commands. Commands and scripts can be embedded in [Initial Access](https://attack.mitre.org/tactics/TA0001) payloads delivered to victims as lure documents or as secondary payloads downloaded from an existing C2. Adversaries may also execute commands through interactive terminals/shells, as well as utilize various [Remote Services](https://attack.mitre.org/techniques/T1021) in order to achieve remote Execution.(Citation: Powershell Remote Commands)(Citation: Cisco IOS Software Integrity Assurance - Command History)(Citation: Remote Shell Execution in Python)",
+            "kill_chain_phases": [
+                {
+                    "kill_chain_name": "mitre-attack",
+                    "phase_name": "execution"
+                }
+            ],
+            "external_references": [
+                {
+                    "source_name": "mitre-attack",
+                    "url": "https://attack.mitre.org/techniques/T1059",
+                    "external_id": "T1059"
+                },
+                {
+                    "source_name": "Remote Shell Execution in Python",
+                    "description": "Abdou Rockikz. (2020, July). How to Execute Shell Commands in a Remote Machine in Python. Retrieved July 26, 2021.",
+                    "url": "https://www.thepythoncode.com/article/executing-bash-commands-remotely-in-python"
+                },
+                {
+                    "source_name": "Cisco IOS Software Integrity Assurance - Command History",
+                    "description": "Cisco. (n.d.). Cisco IOS Software Integrity Assurance - Command History. Retrieved October 21, 2020.",
+                    "url": "https://tools.cisco.com/security/center/resources/integrity_assurance.html#23"
+                },
+                {
+                    "source_name": "Powershell Remote Commands",
+                    "description": "Microsoft. (2020, August 21). Running Remote Commands. Retrieved July 26, 2021.",
+                    "url": "https://docs.microsoft.com/en-us/powershell/scripting/learn/remoting/running-remote-commands?view=powershell-7.1"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+            ],
+            "x_mitre_attack_spec_version": "3.1.0",
+            "x_mitre_domains": [
+                "enterprise-attack"
+            ],
+            "x_mitre_data_sources": [
+                "Script: Script Execution",
+                "Process: Process Creation",
+                "Process: Process Metadata",
+                "Module: Module Load",
+                "Command: Command Execution"
+            ],
+            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "x_mitre_detection": "Command-line and scripting activities can be captured through proper logging of process execution with command-line arguments. This information can be useful in gaining additional insight to adversaries' actions through how they use native processes or custom tools. Also monitor for loading of modules associated with specific languages.\n\nIf scripting is restricted for normal users, then any attempt to enable scripts running on a system would be considered suspicious. If scripts are not commonly used on a system, but enabled, scripts running out of cycle from patching or other administrator functions are suspicious. Scripts should be captured from the file system when possible to determine their actions and intent.\n\nScripts are likely to perform actions with various effects on a system that may generate events, depending on the types of monitoring used. Monitor processes and command-line arguments for script execution and subsequent behavior. Actions may be related to network and system information discovery, collection, or other scriptable post-compromise behaviors and could be used as indicators of detection leading back to the source script.",
+            "x_mitre_deprecated": false,
+            "x_mitre_platforms": [
+                "Linux",
+                "macOS",
+                "Windows",
+                "Network",
+                "Office 365",
+                "Azure AD",
+                "IaaS",
+                "Google Workspace"
+            ],
+            "x_mitre_is_subtechnique": false,
+            "x_mitre_remote_support": true,
+            "x_mitre_version": "2.4"
+        },
+        {
+            "type": "intrusion-set",
+            "id": "intrusion-set--00f67a77-86a4-4adf-be26-1a54fc713340",
+            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "created": "2019-01-29T21:27:24.793Z",
+            "modified": "2022-01-18T17:13:14.610Z",
+            "name": "APT38",
+            "description": "[APT38](https://attack.mitre.org/groups/G0082) is a North Korean state-sponsored threat group that specializes in financial cyber operations; it has been attributed to the Reconnaissance General Bureau.(Citation: CISA AA20-239A BeagleBoyz August 2020) Active since at least 2014, [APT38](https://attack.mitre.org/groups/G0082) has targeted banks, financial institutions, casinos, cryptocurrency exchanges, SWIFT system endpoints, and ATMs in at least 38 countries worldwide. Significant operations include the 2016 Bank of Bangladesh heist, during which [APT38](https://attack.mitre.org/groups/G0082) stole $81 million, as well as attacks against Bancomext (2018) and Banco de Chile (2018); some of their attacks have been destructive.(Citation: CISA AA20-239A BeagleBoyz August 2020)(Citation: FireEye APT38 Oct 2018)(Citation: DOJ North Korea Indictment Feb 2021)(Citation: Kaspersky Lazarus Under The Hood Blog 2017)\n\nNorth Korean group definitions are known to have significant overlap, and some security researchers report all North Korean state-sponsored cyber activity under the name [Lazarus Group](https://attack.mitre.org/groups/G0032) instead of tracking clusters or subgroups.",
+            "aliases": [
+                "APT38",
+                "NICKEL GLADSTONE",
+                "BeagleBoyz",
+                "Bluenoroff",
+                "Stardust Chollima"
+            ],
+            "external_references": [
+                {
+                    "source_name": "mitre-attack",
+                    "url": "https://attack.mitre.org/groups/G0082",
+                    "external_id": "G0082"
+                },
+                {
+                    "source_name": "APT38",
+                    "description": "(Citation: FireEye APT38 Oct 2018)"
+                },
+                {
+                    "source_name": "NICKEL GLADSTONE",
+                    "description": "(Citation: SecureWorks NICKEL GLADSTONE profile Sept 2021)"
+                },
+                {
+                    "source_name": "BeagleBoyz",
+                    "description": "(Citation: CISA AA20-239A BeagleBoyz August 2020)"
+                },
+                {
+                    "source_name": "Bluenoroff",
+                    "description": "(Citation: Kaspersky Lazarus Under The Hood Blog 2017)"
+                },
+                {
+                    "source_name": "Stardust Chollima",
+                    "description": "(Citation: CrowdStrike Stardust Chollima Profile April 2018)(Citation: CrowdStrike GTR 2021 June 2021)"
+                },
+                {
+                    "source_name": "CISA AA20-239A BeagleBoyz August 2020",
+                    "description": "DHS/CISA. (2020, August 26). FASTCash 2.0: North Korea's BeagleBoyz Robbing Banks. Retrieved September 29, 2021.",
+                    "url": "https://us-cert.cisa.gov/ncas/alerts/aa20-239a"
+                },
+                {
+                    "source_name": "FireEye APT38 Oct 2018",
+                    "description": "FireEye. (2018, October 03). APT38: Un-usual Suspects. Retrieved November 6, 2018.",
+                    "url": "https://content.fireeye.com/apt/rpt-apt38"
+                },
+                {
+                    "source_name": "DOJ North Korea Indictment Feb 2021",
+                    "description": "Department of Justice. (2021, February 17). Three North Korean Military Hackers Indicted in Wide-Ranging Scheme to Commit Cyberattacks and Financial Crimes Across the Globe. Retrieved June 9, 2021.",
+                    "url": "https://www.justice.gov/opa/pr/three-north-korean-military-hackers-indicted-wide-ranging-scheme-commit-cyberattacks-and"
+                },
+                {
+                    "source_name": "Kaspersky Lazarus Under The Hood Blog 2017",
+                    "description": "GReAT. (2017, April 3). Lazarus Under the Hood. Retrieved April 17, 2019.",
+                    "url": "https://securelist.com/lazarus-under-the-hood/77908/"
+                },
+                {
+                    "source_name": "SecureWorks NICKEL GLADSTONE profile Sept 2021",
+                    "description": "SecureWorks. (2021, September 29). NICKEL GLADSTONE Threat Profile. Retrieved September 29, 2021.",
+                    "url": "https://www.secureworks.com/research/threat-profiles/nickel-gladstone"
+                },
+                {
+                    "source_name": "CrowdStrike Stardust Chollima Profile April 2018",
+                    "description": "Meyers, Adam. (2018, April 6). Meet CrowdStrike\u2019s Adversary of the Month for April: STARDUST CHOLLIMA. Retrieved September 29, 2021.",
+                    "url": "https://www.crowdstrike.com/blog/meet-crowdstrikes-adversary-of-the-month-for-april-stardust-chollima/"
+                },
+                {
+                    "source_name": "CrowdStrike GTR 2021 June 2021",
+                    "description": "CrowdStrike. (2021, June 7). CrowdStrike 2021 Global Threat Report. Retrieved September 29, 2021.",
+                    "url": "https://go.crowdstrike.com/rs/281-OBQ-266/images/Report2021GTR.pdf"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+            ],
+            "x_mitre_domains": [
+                "enterprise-attack",
+                "ics-attack"
+            ],
+            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "x_mitre_version": "2.0"
+        },
+        {
+            "type": "note",
+            "spec_version": "2.1",
+            "id": "note--b5e3b55a-9f94-4559-9609-b2bd39bb689b",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-05-30T07:25:56.354911Z",
+            "modified": "2024-05-30T07:25:56.354911Z",
+            "abstract": "txt2stix Extractions: report--2538b780-5423-47dd-aadf-55f8cfd9b71c",
+            "content": "eyJhaSI6IHsiZXh0cmFjdGlvbnMiOiB7ImV4dHJhY3Rpb25fMCI6IHsidHlwZSI6ICJhaV9taXRyZV9hdHRhY2tfZW50ZXJwcmlzZSIsICJ2YWx1ZSI6ICJUMTA3OCIsICJvcmlnaW5hbF90ZXh0IjogIkFQVDM5IGZyZXF1ZW50bHkgcmVnaXN0ZXJzIGFuZCBsZXZlcmFnZXMgZG9tYWlucyB0aGF0IG1hc3F1ZXJhZGUgYXMgbGVnaXRpbWF0ZSB3ZWIgc2VydmljZXMgYW5kIG9yZ2FuaXphdGlvbnMgdGhhdCBhcmUgcmVsZXZhbnQgdG8gdGhlIGludGVuZGVkIHRhcmdldC4iLCAic3RhcnRfaW5kZXgiOiBbMTAyNF0sICJpZCI6ICJleHRyYWN0aW9uXzAifSwgImV4dHJhY3Rpb25fMSI6IHsidHlwZSI6ICJhaV9taXRyZV9hdHRhY2tfZW50ZXJwcmlzZSIsICJ2YWx1ZSI6ICJUMTE5MCIsICJvcmlnaW5hbF90ZXh0IjogIkZvciBpbml0aWFsIGNvbXByb21pc2UsIEZpcmVFeWUgSW50ZWxsaWdlbmNlIGhhcyBvYnNlcnZlZCBBUFQzOSBsZXZlcmFnZSBzcGVhciBwaGlzaGluZyBlbWFpbHMgd2l0aCBtYWxpY2lvdXMgYXR0YWNobWVudHMgYW5kL29yIGh5cGVybGlua3MgdHlwaWNhbGx5IHJlc3VsdGluZyBpbiBhIFBPV0JBVCBpbmZlY3Rpb24uIiwgInN0YXJ0X2luZGV4IjogWzEzNDNdLCAiaWQiOiAiZXh0cmFjdGlvbl8xIn0sICJleHRyYWN0aW9uXzIiOiB7InR5cGUiOiAiYWlfbWl0cmVfYXR0YWNrX2VudGVycHJpc2UiLCAidmFsdWUiOiAiVDEwNTkiLCAib3JpZ2luYWxfdGV4dCI6ICJQb3N0LWNvbXByb21pc2UsIEFQVDM5IGxldmVyYWdlcyBjdXN0b20gYmFja2Rvb3JzIHN1Y2ggYXMgU0VBV0VFRCwgQ0FDSEVNT05FWSwgYW5kIGEgdW5pcXVlIHZhcmlhbnQgb2YgUE9XQkFUIHRvIGVzdGFibGlzaCBhIGZvb3Rob2xkIGluIGEgdGFyZ2V0IGVudmlyb25tZW50LiIsICJzdGFydF9pbmRleCI6IFsxNzY5XSwgImlkIjogImV4dHJhY3Rpb25fMiJ9LCAiZXh0cmFjdGlvbl8zIjogeyJ0eXBlIjogImFpX21pdHJlX2F0dGFja19lbnRlcnByaXNlIiwgInZhbHVlIjogIlQxMDc4IiwgIm9yaWdpbmFsX3RleHQiOiAiRnVydGhlcm1vcmUsIHRoaXMgZ3JvdXAgaGFzIHJvdXRpbmVseSBpZGVudGlmaWVkIGFuZCBleHBsb2l0ZWQgdnVsbmVyYWJsZSB3ZWIgc2VydmVycyBvZiB0YXJnZXRlZCBvcmdhbml6YXRpb25zIHRvIGluc3RhbGwgd2ViIHNoZWxscywgc3VjaCBhcyBBTlRBSyBhbmQgQVNQWFNQWSwgYW5kIHVzZWQgc3RvbGVuIGxlZ2l0aW1hdGUgY3JlZGVudGlhbHMgdG8gY29tcHJvbWlzZSBleHRlcm5hbGx5IGZhY2luZyBPdXRsb29rIFdlYiBBY2Nlc3MgKE9XQSkgcmVzb3VyY2VzLiIsICJzdGFydF9pbmRleCI6IFsxNDc2XSwgImlkIjogImV4dHJhY3Rpb25fMyJ9LCAiZXh0cmFjdGlvbl80IjogeyJ0eXBlIjogImFpX21pdHJlX2F0dGFja19lbnRlcnByaXNlIiwgInZhbHVlIjogIkcwMDgyIiwgIm9yaWdpbmFsX3RleHQiOiAiSW4gRGVjZW1iZXIgMjAxOCwgRmlyZUV5ZSBpZGVudGlmaWVkIEFQVDM5IGFzIGFuIElyYW5pYW4gY3liZXIgZXNwaW9uYWdlIGdyb3VwIHJlc3BvbnNpYmxlIGZvciB3aWRlc3ByZWFkIHRoZWZ0IG9mIHBlcnNvbmFsIGluZm9ybWF0aW9uLiIsICJzdGFydF9pbmRleCI6IFsyODVdLCAiaWQiOiAiZXh0cmFjdGlvbl80In19fX0=",
+            "object_refs": [
+                "report--2538b780-5423-47dd-aadf-55f8cfd9b71c"
+            ],
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--2538b780-5423-47dd-aadf-55f8cfd9b71c"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--e828b379-4e03-4974-9ac4-e53a884c97c1",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "note",
+            "spec_version": "2.1",
+            "id": "note--3744fa8e-46d5-4ec8-89cd-e182a3b4d693",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-05-30T07:25:56.354911Z",
+            "modified": "2024-05-30T07:25:56.354911Z",
+            "abstract": "txt2stix Relationships: report--2538b780-5423-47dd-aadf-55f8cfd9b71c",
+            "content": "eyJyZWxhdGlvbnNoaXBzIjogeyJyZWxhdGlvbnNoaXBfMCI6IHsic291cmNlX3JlZiI6ICJleHRyYWN0aW9uXzQiLCAidGFyZ2V0X3JlZiI6ICJleHRyYWN0aW9uXzAiLCAicmVsYXRpb25zaGlwX3R5cGUiOiAidXNlcyJ9LCAicmVsYXRpb25zaGlwXzEiOiB7InNvdXJjZV9yZWYiOiAiZXh0cmFjdGlvbl80IiwgInRhcmdldF9yZWYiOiAiZXh0cmFjdGlvbl8xIiwgInJlbGF0aW9uc2hpcF90eXBlIjogInVzZXMifSwgInJlbGF0aW9uc2hpcF8yIjogeyJzb3VyY2VfcmVmIjogImV4dHJhY3Rpb25fNCIsICJ0YXJnZXRfcmVmIjogImV4dHJhY3Rpb25fMiIsICJyZWxhdGlvbnNoaXBfdHlwZSI6ICJ1c2VzIn0sICJyZWxhdGlvbnNoaXBfMyI6IHsic291cmNlX3JlZiI6ICJleHRyYWN0aW9uXzQiLCAidGFyZ2V0X3JlZiI6ICJleHRyYWN0aW9uXzMiLCAicmVsYXRpb25zaGlwX3R5cGUiOiAidXNlcyJ9fX0=",
+            "object_refs": [
+                "report--2538b780-5423-47dd-aadf-55f8cfd9b71c"
+            ],
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--2538b780-5423-47dd-aadf-55f8cfd9b71c"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--e828b379-4e03-4974-9ac4-e53a884c97c1",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "relationship",
+            "spec_version": "2.1",
+            "id": "relationship--70921d4a-2055-438c-8843-eb4e778391db",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-05-30T07:25:56.354911Z",
+            "modified": "2024-05-30T07:25:56.354911Z",
+            "relationship_type": "uses",
+            "source_ref": "intrusion-set--00f67a77-86a4-4adf-be26-1a54fc713340",
+            "target_ref": "course-of-action--d45f03a8-790a-4f90-b956-cd7e5b8886bf",
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--2538b780-5423-47dd-aadf-55f8cfd9b71c"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "relationship",
+            "spec_version": "2.1",
+            "id": "relationship--593da286-82cb-47e0-89ae-2668f7a2943e",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-05-30T07:25:56.354911Z",
+            "modified": "2024-05-30T07:25:56.354911Z",
+            "relationship_type": "uses",
+            "source_ref": "intrusion-set--00f67a77-86a4-4adf-be26-1a54fc713340",
+            "target_ref": "attack-pattern--b17a1a56-e99c-403c-8948-561df0cffe81",
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--2538b780-5423-47dd-aadf-55f8cfd9b71c"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "relationship",
+            "spec_version": "2.1",
+            "id": "relationship--e0c4dfab-77ed-47f1-a6d6-8c313d4c0c12",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-05-30T07:25:56.354911Z",
+            "modified": "2024-05-30T07:25:56.354911Z",
+            "relationship_type": "uses",
+            "source_ref": "intrusion-set--00f67a77-86a4-4adf-be26-1a54fc713340",
+            "target_ref": "course-of-action--65da1eb6-d35d-4853-b280-98a76c0aef53",
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--2538b780-5423-47dd-aadf-55f8cfd9b71c"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "relationship",
+            "spec_version": "2.1",
+            "id": "relationship--d1208b99-64fb-419f-90bb-8007339242db",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-05-30T07:25:56.354911Z",
+            "modified": "2024-05-30T07:25:56.354911Z",
+            "relationship_type": "uses",
+            "source_ref": "intrusion-set--00f67a77-86a4-4adf-be26-1a54fc713340",
+            "target_ref": "attack-pattern--3f886f2a-874f-4333-b794-aa6075009b1c",
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--2538b780-5423-47dd-aadf-55f8cfd9b71c"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "relationship",
+            "spec_version": "2.1",
+            "id": "relationship--f7dbc52a-dd70-4f89-a24a-5f7bb0d4ed1a",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-05-30T07:25:56.354911Z",
+            "modified": "2024-05-30T07:25:56.354911Z",
+            "relationship_type": "uses",
+            "source_ref": "intrusion-set--00f67a77-86a4-4adf-be26-1a54fc713340",
+            "target_ref": "attack-pattern--7385dfaf-6886-4229-9ecd-6fd678040830",
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--2538b780-5423-47dd-aadf-55f8cfd9b71c"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "relationship",
+            "spec_version": "2.1",
+            "id": "relationship--10c708fb-9f55-4b09-9a59-85e5aedd4ade",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-05-30T07:25:56.354911Z",
+            "modified": "2024-05-30T07:25:56.354911Z",
+            "relationship_type": "uses",
+            "source_ref": "intrusion-set--00f67a77-86a4-4adf-be26-1a54fc713340",
+            "target_ref": "course-of-action--d45f03a8-790a-4f90-b956-cd7e5b8886bf",
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--2538b780-5423-47dd-aadf-55f8cfd9b71c"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "relationship",
+            "spec_version": "2.1",
+            "id": "relationship--859e62a7-3760-4445-9df9-779bd38a312e",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-05-30T07:25:56.354911Z",
+            "modified": "2024-05-30T07:25:56.354911Z",
+            "relationship_type": "uses",
+            "source_ref": "intrusion-set--00f67a77-86a4-4adf-be26-1a54fc713340",
+            "target_ref": "attack-pattern--b17a1a56-e99c-403c-8948-561df0cffe81",
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--2538b780-5423-47dd-aadf-55f8cfd9b71c"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        }
+    ]
+}

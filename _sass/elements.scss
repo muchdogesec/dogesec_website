@@ -1,0 +1,123 @@
+html {
+  background: #f40269;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: 'DogeSansRegular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('DogeSansRegular'), url('assets/fonts/DogeSans-Regular.woff') format('woff');
+}
+
+body {
+  font-family: "DogeSansRegular";
+  font-size: 10px;
+}
+
+a {
+  color: #00a4ca;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/*
+img {
+  width: 100%;
+}
+*/
+
+h1 strong, h2 strong {
+  font-weight: 700;
+}
+
+h1 {
+  font-weight: 300;
+  font-size: 2.3rem;
+  margin: 0;
+}
+
+h2 {
+  font-weight: 300;
+  font-size: 1.8rem;
+  margin: 0 0 30px 0;
+}
+
+h3 {
+  margin: 20px 0 10px 0;
+  font-weight: 300;
+  font-size: 1.6rem;
+}
+
+p, address {
+  font-size: 1.2em;
+  color: #666;
+  margin-bottom: 20px;
+  font-weight: 300;
+  line-height: 1.3em;
+}
+
+ul, ol, dl {
+  li {
+    color: #666;
+    font-weight: 300;
+    line-height: 1.3em;
+  }
+}
+
+// Hightlight number lines styles
+.hljs-ln-numbers {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  text-align: center;
+  color: #ccc;
+  vertical-align: top;
+
+}
+
+.hljs-ln-numbers .hljs-ln-n {
+padding-right: 8px;
+}
+
+
+// Styles for tables when using please always use tableizer-table in order not to mess the code highlighting styles
+.tableizer-table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 10px 0;
+    width: 100%;
+    table-layout: fixed;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: #666;
+    text-align: center;
+    
+  thead {
+    th {
+      background-color: $brand-color;
+      font-size: 1.3rem;
+      font-weight: 300;
+      line-height: 1em;
+    }
+
+  }
+
+  th, td {
+    padding: 4px 0;
+  }
+
+  tr {
+    border: 1px solid #ddd;
+  }
+}

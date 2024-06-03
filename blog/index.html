@@ -1,0 +1,29 @@
+---
+title: Blog
+heading: Blog
+description: The DOGESEC blog
+image: /assets/images/global/much_security_blog_1200x630.jpg
+layout: page
+---
+
+<div class="text-container">
+	<p><div align="center" class="button"><a href="/blog/search">Search the blog</a></div></p>
+	<ul class="blog-posts">
+		{% include list-posts.html posts=paginator.posts %}
+	</ul>
+
+	{% if paginator.total_pages > 1 %}
+		<!-- Pagination links -->
+		<div class="pagination">
+			{% if paginator.previous_page %}
+				<a href="{% include relative-src.html src=paginator.previous_page_path %}" class="previous btn">&larr; Newer posts</a>
+			{% endif %}
+
+			<span class="page_number ">{{ paginator.page }} of {{ paginator.total_pages }}</span>
+
+			{% if paginator.next_page %}
+				<a href="{% include relative-src.html src=paginator.next_page_path %}" class="next btn">Older posts &rarr;</a>
+			{% endif %}
+		</div>
+	{% endif %}
+</div>

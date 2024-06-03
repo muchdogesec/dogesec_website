@@ -1,0 +1,13 @@
+- links:
+  - name: GitHub
+    link: https://github.com/muchdogesec
+- links: 
+  - name: Blog
+    link: /blog
+  - name: Community
+    link: https://community.dogesec.com/
+- links:
+  - name: About
+    link: /about
+  - name: Contact
+    link: /contact

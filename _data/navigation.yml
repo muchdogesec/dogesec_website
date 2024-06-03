@@ -1,0 +1,12 @@
+- name: About
+  link: /about
+  new_window: false
+  highlight: false
+- name: Blog
+  link: /blog
+  new_window: false
+  highlight: false
+- name: Community
+  link: https://community.dogesec.com/
+  new_window: true
+  highlight: false

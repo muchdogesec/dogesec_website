@@ -1,0 +1,94 @@
+<!doctype html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		{% seo %}
+		{% feed_meta %}
+
+		<link rel="stylesheet" type="text/css" href="/assets/css/screen.css">
+		<link rel="stylesheet" type="text/css" href="/assets/css/fontawesome.css">
+		<link rel="stylesheet" type="text/css" href="/assets/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="/assets/css/cookieconsent.min.css" />
+		<link rel="stylesheet" type="text/css" href="/assets/css/monokai.min.css">
+		<link rel="stylesheet" type="text/css" href="/assets/css/app.css">
+
+		{% include favicon.html %}
+		
+		<script>
+		window.addEventListener("load", function(){
+		window.cookieconsent.initialise({
+		  "palette": {
+		    "popup": {
+		      "background": "#f40269",
+		      "text": "#fff"
+		    },
+		    "button": {
+		      "background": "#0058ff"
+		    }
+		  },
+		  "content": {
+		  	"href": "/cookies"
+  			},
+		  "position": "top",
+		  "static": true
+		})});
+		</script>
+
+	</head>
+	<body>
+		<header>
+			<div class="container">
+				<div class="company-name"><a href="{{ site.baseurl }}/"><img src="{{ site.baseurl }}/assets/images/icons/logo.png" alt="DOGESEC Logo" title="DOGESEC Logo" /></a></div>
+				{% include navigation.html %}
+			</div>
+		</header>
+		{{ content }}
+		<footer>
+			<div class="container">
+				<div class="footer-columns">
+					{% for column in site.data.footer %}
+					<ul class="footer-links">
+						{% for link in column.links %}
+							<li><a {% if link.new_window %}target="_blank"{% endif %} href="{% include relative-src.html src=link.link %}" {% if link.social_icon %}class="{{ link.social_icon }}-icon"{% endif %}>
+								{% if link.social_icon %}
+									{% include social-icon.html icon=link.social_icon %}
+								{% endif %}
+								{{ link.name }}</a></li>
+						{% endfor %}
+					</ul>
+					{% endfor %}
+				</div>
+
+				<p class="copyright">&copy; {{ site.time | date: '%Y' }} <a href="{{ site.url }}/">DOGESEC</a></p>
+				<p class="copyright">much security. so secure. many protection. very safe. wow.</p>
+				<br />
+				<p class="copyright"> <a href="{{ site.url }}/terms">Terms</a> | <a href="{{ site.url }}/privacy">Privacy</a> | <a href="{{ site.url }}/cookies">Cookies</a></p>			
+
+			</div>
+		</footer>
+
+		<script src="/assets/js/jquery-3.3.1.slim.min.js"></script>
+		<script src="/assets/js/popper.min.js"></script>
+		<script src="/assets/js/bootstrap.min.js"></script>
+		<script src="/assets/js/cookieconsent.min.js"></script>
+		<script src="/assets/js/highlight.min.js"></script>
+    	<script src="/assets/js/highlightjs-line-numbers.js"></script>
+    	<script src="/assets/js/stixview.bundle.js"></script>    	
+
+	    <script>
+	      hljs.highlightAll();
+	      hljs.initLineNumbersOnLoad();
+	    </script>
+
+	    <script>
+	      $(document).ready(function () {
+	        $('code').each(function (i, block) {
+	          hljs.highlightBlock(block);
+	        });
+	      });
+	    </script>
+	</body>
+</html>

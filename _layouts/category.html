@@ -1,0 +1,41 @@
+---
+layout: page
+---
+
+<div class="text-container">
+
+  <p><a href="/blog">Blog</a> &gt; {{ page.title }}</p>
+
+  {% for post in site.categories[page.category] %}
+
+  {% assign blog = site.pages | where: "path", "blog/index.html" | first %}
+  <ul class="blog-posts">
+    <li class="blog-post">
+      <img class="img-fluid" src="{{ post.featured_image }}" alt="{{ post.title }}" title="{{ post.title }}"/>
+      <h3><a href="{% include relative-src.html src=post.url %}">{{ post.title }}</a></h3>
+      {% include post-title.html post=post %}
+      <div class="post-content">
+        {{ post.description }}
+        <div class="button"><a href="{% include relative-src.html src=post.url %}">Read More</a></div>
+      </div>
+    </li>
+  </ul>
+
+  {% if paginator.total_pages > 1 %}
+    <!-- Pagination links -->
+    <div class="pagination">
+      {% if paginator.previous_page %}
+        <a href="{% include relative-src.html src=paginator.previous_page_path %}" class="previous btn">&larr; Newer posts</a>
+      {% endif %}
+
+      <span class="page_number ">{{ paginator.page }} of {{ paginator.total_pages }}</span>
+
+      {% if paginator.next_page %}
+        <a href="{% include relative-src.html src=paginator.next_page_path %}" class="next btn">Older posts &rarr;</a>
+      {% endif %}
+    </div>
+  {% endif %}
+
+{% endfor %}
+
+</div>

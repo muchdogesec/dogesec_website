@@ -1,0 +1,32 @@
+---
+title: Contact Us
+heading: Contact Us
+description: Email the DOGESEC team directly.
+author: DOGESEC
+sitemap: false
+excluded_in_search: true
+layout: page
+---
+
+<div class="text-container">
+
+	<p>Our team can be contacted directly by filling in the form below. <strong>Please be aware</strong>, we will only respond to support requests via email from paying customers. If you are on a free plan and require support, please use the <a href="https://community.dogesec.com/" target="_blank">DOGESEC Community forum</a>.</p>
+		
+		<form action="https://formspree.io/f/mnqwepqy" method="POST">
+
+			<input type="hidden" name="_next" value="/contact/success/" />
+			<input type="text" name="_gotcha" style="display:none" />
+
+			<label for="name">Your name</label>
+  			<input type="text" name="name" required>
+
+  			<label for="email">Your email</label>
+  			<input type="email" name="_replyto" required>
+
+  			<label for="message">Your message</label>
+  			<textarea name="message" required></textarea>
+  			
+			<input type="submit" value="Send message">
+		</form>
+
+</div>

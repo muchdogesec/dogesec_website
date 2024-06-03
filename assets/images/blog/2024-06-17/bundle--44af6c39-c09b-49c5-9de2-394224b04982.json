@@ -1,0 +1,41 @@
+{
+    "type": "bundle",
+    "id": "bundle--44af6c39-c09b-49c5-9de2-394224b04982",
+    "objects": [
+        {
+            "type": "identity",
+            "spec_version": "2.1",
+            "id": "identity--d3f9a82b-7272-417e-9195-f3b0f68159e9",
+            "created": "2016-04-06T20:03:00.000Z",
+            "modified": "2016-04-06T20:03:00.000Z",
+            "name": "Splunk Enterprise Security",
+            "identity_class": "system"
+        },
+        {
+            "type": "observed-data",
+            "spec_version": "2.1",
+            "id": "observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf",
+            "created": "2020-01-06T00:00:00.000Z",
+            "modified": "2020-01-06T00:00:00.000Z",
+            "first_observed": "2020-01-06T00:00:00.000Z",
+            "last_observed": "2020-01-06T00:00:00.000Z",
+            "number_observed": 1,
+            "object_refs": [
+                "file--30038539-3eb6-44bc-a59e-d0d3fe84695a"
+            ]
+        },
+        {
+            "type": "sighting",
+            "spec_version": "2.1",
+            "id": "sighting--093e37e2-c7ec-4d63-aa0a-ee607477c2a1",
+            "created": "2020-01-06T00:00:00.000Z",
+            "modified": "2020-01-06T00:00:00.000Z",
+            "first_seen": "2020-01-06T00:00:00.000Z",
+            "last_seen": "2020-01-06T00:00:00.000Z",
+            "count": 1,
+            "sighting_of_ref": "threat-actor--d64059ca-60b6-452e-8a53-7fa73a696ac7",
+            "observed_data_refs": ["observed-data--b67d30ff-02ac-498a-92f9-32f845f448cf"],
+            "where_sighted_refs": ["identity--d3f9a82b-7272-417e-9195-f3b0f68159e9"]
+        }
+    ]
+}
