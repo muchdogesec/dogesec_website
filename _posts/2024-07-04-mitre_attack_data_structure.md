@@ -1,5 +1,6 @@
 ---
 date: 2024-07-04
+last_modified: 2024-07-04
 title: "MITRE ATT&CK is More Than Tactics and Techniques"
 description: "Software, Data Sources, Data Components, Campaigns etc., make the MITRE ATT&CK data set even more powerful than you might realise."
 categories:

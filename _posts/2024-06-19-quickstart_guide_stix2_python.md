@@ -1,5 +1,6 @@
 ---
 date: 2024-06-19
+last_modified: 2024-06-19
 title: "A Quickstart Guide for the STIX 2 Python Library"
 description: "A post full of code examples that will give you everything you need to start creating STIX objects to make it simple to share your threat research."
 categories:

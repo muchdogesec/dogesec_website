@@ -1,5 +1,6 @@
 ---
 date: 2024-06-17
+last_modified: 2024-06-17
 title: "A Beginners Guide to STIX 2.1 Objects"
 description: "New to STIX? This post shows how objects are created and structured. By the end you will have enough information to start authoring your own objects."
 categories:

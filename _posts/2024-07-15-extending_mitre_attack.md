@@ -1,5 +1,6 @@
 ---
 date: 2024-07-15
+last_modified: 2024-07-15
 title: "Extending MITRE ATT&CK"
 description: "Add new objects, edit existing ones or create an entierly new framework. Anything is possible."
 categories:

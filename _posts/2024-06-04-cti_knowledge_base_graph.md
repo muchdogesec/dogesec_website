@@ -1,5 +1,6 @@
 ---
 date: 2024-06-04
+last_modified: 2024-06-04
 title: "Creating a Cyber Threat Intelligence Graph"
 description: "Joining the data held in knowledge-bases like MITRE ATT&CK allows for rich classification of cyber threat intelligence. Here is how we do that, so you can too."
 categories:

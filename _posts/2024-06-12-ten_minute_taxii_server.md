@@ -1,5 +1,6 @@
 ---
 date: 2024-06-12
+last_modified: 2024-06-12
 title: "Spin Up Your Own TAXII Server in 10 Minutes"
 description: "We built an open-source TAXII server. This post describes how you can use it to start sharing your threat intelligence. Minimal technical knowledge required."
 categories:

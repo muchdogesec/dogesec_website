@@ -1,5 +1,6 @@
 ---
 date: 2024-07-11
+last_modified: 2024-07-11
 title: "Getting Started with MITRE ATT&CK Navigator"
 description: "The MITRE ATT&CK Navigator is a very useful tool to explore the MITRE ATT&CK framework. Here is how I've used it."
 categories:

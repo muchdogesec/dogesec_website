@@ -1,5 +1,6 @@
 ---
 date: 2024-07-01
+last_modified: 2024-07-01
 title: "A Beginners Guide to TAXII Clients and Servers"
 description: "Want to consume and/or share cyber threat intelligence easily? TAXII is what you need. Let me show you."
 categories:

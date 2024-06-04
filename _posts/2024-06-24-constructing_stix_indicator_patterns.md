@@ -1,5 +1,6 @@
 ---
 date: 2024-06-24
+last_modified: 2024-06-24
 title: "Constructing STIX Indicator Patterns"
 description: "Learn how to write STIX Patterns to create detection rules. It's easy."
 categories:
@@ -970,3 +971,4 @@ We use STIX patterns in two of our products that will aid your learning:
 
 * [txt2stix](https://github.com/muchdogesec/txt2stix): creates simple STIX patterns that represented observables extracted from threat reports (a simple example to learn from)
 * [cve2stix](https://github.com/muchdogesec/cve2stix): creates much more advanced STIX patterns to represent what CPEs are vulnerable to a CVE using NVD data (more complex, but a good example of what's possible)
+    * [I've also covered this in a blog post here](/blog/understanding_nvd_cve_cpe_api_responses)

@@ -1,5 +1,6 @@
 ---
 date: 2024-06-06
+last_modified: 2024-06-06
 title: "A Better Way of Working with RSS and ATOM Feeds"
 description: "Blog feeds are incredibly useful for research, but there are many limitations that make working with them tedious. Here is how our team became significantly more efficient using them."
 categories:

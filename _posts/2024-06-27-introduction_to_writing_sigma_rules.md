@@ -1,5 +1,6 @@
 ---
 date: 2024-06-27
+last_modified: 2024-06-27
 title: "An Introduction to Writing Sigma Rules"
 description: "Sigma Rules are becoming more widely adopted. You should probably learn how to write them. Let me show you."
 categories:

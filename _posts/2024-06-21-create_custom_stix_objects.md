@@ -1,5 +1,6 @@
 ---
 date: 2024-06-21
+last_modified: 2024-06-21
 title: "Creating Your Own Custom STIX Objects"
 description: "Sometimes the default STIX 2.1 objects will not be broad enough for your needs. This post describes how you can extend STIX. Python code included."
 categories:

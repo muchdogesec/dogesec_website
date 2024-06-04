@@ -1,5 +1,6 @@
 ---
 date: 2024-07-08
+last_modified: 2024-07-08
 title: "Getting Started with MITRE TRAM"
 description: "Take threat report. Upload threat report. Automatically identify ATT&CK Techniques."
 categories:
