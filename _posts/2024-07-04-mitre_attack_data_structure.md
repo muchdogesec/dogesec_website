@@ -86,7 +86,7 @@ To search for these objects in the Enterprise domain using CTI Butler:
 
 ```sql
 FOR doc IN mitre_attack_enterprise_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "x-mitre-matrix"
   RETURN [doc]
@@ -130,7 +130,7 @@ To search for these objects in the Enterprise domain using CTI Butler:
 
 ```sql
 FOR doc IN mitre_attack_enterprise_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTERdoc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "x-mitre-collection"
   RETURN [doc]
@@ -184,7 +184,7 @@ To search for these objects in the Enterprise domain using CTI Butler:
 
 ```sql
 FOR doc IN mitre_attack_enterprise_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "x-mitre-tactic"
   RETURN [doc]
@@ -264,7 +264,7 @@ To search for these objects in the Enterprise domain using CTI Butler:
 
 ```sql
 FOR doc IN mitre_attack_enterprise_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "attack-pattern"
   AND doc.x_mitre_is_subtechnique == false
@@ -339,7 +339,7 @@ To search for these objects in the Enterprise domain using CTI Butler:
 
 ```sql
 FOR doc IN mitre_attack_enterprise_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "attack-pattern"
   AND doc.x_mitre_is_subtechnique == true
@@ -395,7 +395,7 @@ To search for these objects in the Enterprise domain using CTI Butler:
 
 ```sql
 FOR doc IN mitre_attack_enterprise_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "course-of-action"
   RETURN [doc]
@@ -480,7 +480,7 @@ To search for these objects in the Enterprise domain using CTI Butler:
 
 ```sql
 FOR doc IN mitre_attack_enterprise_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "intrusion-set"
   RETURN [doc]
@@ -571,7 +571,7 @@ To search for these objects in the Enterprise domain using CTI Butler:
 
 ```sql
 FOR doc IN mitre_attack_enterprise_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "malware"
   RETURN [doc]
@@ -634,7 +634,7 @@ To search for these objects in the Enterprise domain using CTI Butler:
 
 ```sql
 FOR doc IN mitre_attack_enterprise_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "tool"
   RETURN [doc]
@@ -731,7 +731,7 @@ To search for these objects in the Enterprise domain using CTI Butler:
 
 ```sql
 FOR doc IN mitre_attack_enterprise_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "campaign"
   RETURN [doc]
@@ -804,7 +804,7 @@ To search for these objects in the Enterprise domain using CTI Butler:
 
 ```sql
 FOR doc IN mitre_attack_enterprise_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "x-mitre-data-source"
   RETURN [doc]
@@ -851,7 +851,7 @@ To search for these objects in the Enterprise domain using CTI Butler:
 
 ```sql
 FOR doc IN mitre_attack_enterprise_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "x-mitre-data-component"
   RETURN [doc]
@@ -937,7 +937,7 @@ To search for these objects in the ICS domain using CTI Butler:
 
 ```sql
 FOR doc IN mitre_attack_ics_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "x-mitre-asset"
   RETURN [doc]
@@ -981,7 +981,7 @@ Using CTI Butler...
 
 ```sql
 FOR doc IN mitre_attack_enterprise_edge_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc._is_ref == false
   COLLECT WITH COUNT INTO length
@@ -994,7 +994,7 @@ I can also easily write a query to identify the different relationships types th
 
 ```sql
 FOR doc IN mitre_attack_enterprise_edge_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._is_ref == false
   AND doc.relationship_type != "revoked-by"
   LET source = DOCUMENT(doc._from)

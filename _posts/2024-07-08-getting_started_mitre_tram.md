@@ -436,7 +436,7 @@ Currently TRAM only supports 50 ATT&CK Techniques, [as listed here](https://gith
 
 ```sql
 FOR doc IN mitre_attack_enterprise_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "attack-pattern"
   RETURN [doc]

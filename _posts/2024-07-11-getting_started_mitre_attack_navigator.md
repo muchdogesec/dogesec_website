@@ -212,7 +212,7 @@ It's also possible to do this in [CTI Butler](https://www.ctibutler.com/) too:
 
 ```sql
 FOR doc IN mitre_attack_enterprise_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "attack-pattern"
   LET ext_refs = doc.external_references != null ? doc.external_references : []
@@ -247,7 +247,7 @@ The data is also available in CTI Butler;
 
 ```sql
 FOR doc IN sigma_rules_vertex_collection
-  FILTER doc._arango_cti_processor_note != "automatically imported object at script runtime"
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "r2024-05-13"
   AND doc.name == "User Added to an Administrator's Azure AD Role"
   LET keys_to_remove = (
