@@ -19,8 +19,8 @@ products:
     - Obstracts
     - Stixify
 author_staff_member: david-greenwood
-image: /assets/images/blog/2024-07-08/header.jpeg
-featured_image: /assets/images/blog/2024-07-08/header.jpeg
+image: /assets/images/blog/2024-07-08/header.png
+featured_image: /assets/images/blog/2024-07-08/header.png
 layout: post
 published: true
 redirect_from:

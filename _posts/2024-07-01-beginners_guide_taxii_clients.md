@@ -13,8 +13,8 @@ tags: [
 products:
     - arango_taxii_server
 author_staff_member: david-greenwood
-image: /assets/images/blog/2024-07-01/header.jpeg
-featured_image: /assets/images/blog/2024-07-01/header.jpeg
+image: /assets/images/blog/2024-07-01/header.png
+featured_image: /assets/images/blog/2024-07-01/header.png
 layout: post
 published: true
 redirect_from:

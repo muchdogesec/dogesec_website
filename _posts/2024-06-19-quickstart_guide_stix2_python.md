@@ -12,8 +12,8 @@ tags: [
 products:
     - txt2stix
 author_staff_member: david-greenwood
-image: /assets/images/blog/2024-06-19/header.jpeg
-featured_image: /assets/images/blog/2024-06-19/header.jpeg
+image: /assets/images/blog/2024-06-19/header.png
+featured_image: /assets/images/blog/2024-06-19/header.png
 layout: post
 published: true
 redirect_from:

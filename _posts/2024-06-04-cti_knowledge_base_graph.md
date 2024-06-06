@@ -27,8 +27,8 @@ products:
     - stix2arango
     - arango_cti_processor
 author_staff_member: david-greenwood
-image: /assets/images/blog/2024-06-04/header.jpeg
-featured_image: /assets/images/blog/2024-06-04/header.jpeg
+image: /assets/images/blog/2024-06-04/header.png
+featured_image: /assets/images/blog/2024-06-04/header.png
 layout: post
 published: true
 redirect_from:

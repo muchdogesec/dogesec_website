@@ -17,8 +17,8 @@ products:
     - cxe2stix_helper
     - Vulmatch
 author_staff_member: david-greenwood
-image: /assets/images/blog/2024-06-10/header.jpeg
-featured_image: /assets/images/blog/2024-06-10/header.jpeg
+image: /assets/images/blog/2024-06-10/header.png
+featured_image: /assets/images/blog/2024-06-10/header.png
 layout: post
 published: true
 redirect_from:

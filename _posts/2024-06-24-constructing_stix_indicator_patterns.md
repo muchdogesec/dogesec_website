@@ -15,8 +15,8 @@ products:
     - sigma2stix
     - cve2stix
 author_staff_member: david-greenwood
-image: /assets/images/blog/2024-06-24/header.jpeg
-featured_image: /assets/images/blog/2024-06-24/header.jpeg
+image: /assets/images/blog/2024-06-24/header.png
+featured_image: /assets/images/blog/2024-06-24/header.png
 layout: post
 published: true
 redirect_from:
