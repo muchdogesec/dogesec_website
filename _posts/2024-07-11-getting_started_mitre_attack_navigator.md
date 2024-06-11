@@ -543,8 +543,6 @@ Sub-Technique
         }
 ```
 
-[Here is a full bundle file of objects produced by disarm2stix](https://raw.githubusercontent.com/muchdogesec/cti_knowledge_base_store/main/disarm/disarm-bundle-v1_4.json).
-
 Which once imported to Navigator looks as follows;
 
 <img class="img-fluid" src="/assets/images/blog/2024-07-11/navigator-using-disarm.png" alt="Navigator using DISARM" title="Navigator using DISARM" />
