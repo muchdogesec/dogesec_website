@@ -333,7 +333,7 @@ Now I can see all objects that link to Europe
 ```sql
 FOR edge IN locations_edge_collection
 FILTER edge.target_ref == "location--82b2b1a9-5f88-55ab-877e-812017e26fca"
-RETURN doc.id
+RETURN edge.source_ref
 ```
 
 Which returns a list of location IDs.
