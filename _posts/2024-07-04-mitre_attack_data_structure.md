@@ -89,7 +89,9 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
   FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "x-mitre-matrix"
-  RETURN [doc]
+  LET keys = ATTRIBUTES(doc)
+  LET filteredKeys = keys[* FILTER !STARTS_WITH(CURRENT, "_")]
+  RETURN KEEP(doc, filteredKeys)
 ```
 
 Returns 1 Object in v15.1.
@@ -133,7 +135,9 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
   FILTERdoc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "x-mitre-collection"
-  RETURN [doc]
+  LET keys = ATTRIBUTES(doc)
+  LET filteredKeys = keys[* FILTER !STARTS_WITH(CURRENT, "_")]
+  RETURN KEEP(doc, filteredKeys)
 ```
 
 Returns 1 Object in v15.1.
@@ -187,7 +191,9 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
   FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "x-mitre-tactic"
-  RETURN [doc]
+  LET keys = ATTRIBUTES(doc)
+  LET filteredKeys = keys[* FILTER !STARTS_WITH(CURRENT, "_")]
+  RETURN KEEP(doc, filteredKeys)
 ```
 
 Returns 14 Objects in v15.1.
@@ -268,7 +274,9 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "attack-pattern"
   AND doc.x_mitre_is_subtechnique == false
-  RETURN [doc]
+  LET keys = ATTRIBUTES(doc)
+  LET filteredKeys = keys[* FILTER !STARTS_WITH(CURRENT, "_")]
+  RETURN KEEP(doc, filteredKeys)
 ```
 
 Returns 342 Objects in v15.1.
@@ -343,7 +351,9 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "attack-pattern"
   AND doc.x_mitre_is_subtechnique == true
-  RETURN [doc]
+  LET keys = ATTRIBUTES(doc)
+  LET filteredKeys = keys[* FILTER !STARTS_WITH(CURRENT, "_")]
+  RETURN KEEP(doc, filteredKeys)
 ```
 
 Returns 438 Objects in v15.1.
@@ -358,7 +368,7 @@ https://attack.mitre.org/mitigations/
 
 Mitigations represent security concepts and classes of technologies that can be used to prevent a technique or sub-technique from being successfully executed.
 
-Mitigations have IDs in format: MNNNN
+Mitigations have IDs in format: MNNNN (and TNNNN)
 
 For example, Mitigation M1049 - Antivirus/Antimalware: https://attack.mitre.org/mitigations/M1049/
 
@@ -398,12 +408,48 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
   FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "course-of-action"
-  RETURN [doc]
+  LET keys = ATTRIBUTES(doc)
+  LET filteredKeys = keys[* FILTER !STARTS_WITH(CURRENT, "_")]
+  RETURN KEEP(doc, filteredKeys)
 ```
 
 Returns 284 Objects in v15.1.
 
 Also found in `mitre_attack_mobile_vertex_collection` and `mitre_attack_ics_vertex_collection`
+
+As noted, some Mitigations have the IDs in the format TNNNN.
+
+These Mitigations have a direct link to a Techniqiue with the same ID. e.g. T1005
+
+```sql
+FOR doc IN mitre_attack_enterprise_vertex_collection
+  FILTER doc._stix2arango_note != "automatically imported on collection creation"
+  AND doc._stix2arango_note == "v15.1"
+  AND doc.external_references != null AND IS_ARRAY(doc.external_references)
+  FOR extRef IN doc.external_references
+    FILTER extRef.external_id == "T1005"
+    AND extRef.source_name == "mitre-attack"
+    RETURN {
+        name: doc.name,
+        id: doc.id,
+        attack_id: extRef.external_id
+        }
+```
+
+```json
+[
+  {
+    "name": "Data from Local System",
+    "id": "attack-pattern--3c4a2599-71ee-4405-ba1e-0e28414b4bc5",
+    "attack_id": "T1005"
+  },
+  {
+    "name": "Data from Local System Mitigation",
+    "id": "course-of-action--7ee0879d-ce4f-4f54-a96b-c532dfb98ffd",
+    "attack_id": "T1005"
+  }
+]
+```
 
 ### ATT&CK object `Groups` = STIX object `intrusion-set`
 
@@ -483,7 +529,9 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
   FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "intrusion-set"
-  RETURN [doc]
+  LET keys = ATTRIBUTES(doc)
+  LET filteredKeys = keys[* FILTER !STARTS_WITH(CURRENT, "_")]
+  RETURN KEEP(doc, filteredKeys)
 ```
 
 Returns 165 Objects in v15.1.
@@ -574,7 +622,9 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
   FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "malware"
-  RETURN [doc]
+  LET keys = ATTRIBUTES(doc)
+  LET filteredKeys = keys[* FILTER !STARTS_WITH(CURRENT, "_")]
+  RETURN KEEP(doc, filteredKeys)
 ```
 
 Returns 596 Objects in v15.1.
@@ -637,7 +687,9 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
   FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "tool"
-  RETURN [doc]
+  LET keys = ATTRIBUTES(doc)
+  LET filteredKeys = keys[* FILTER !STARTS_WITH(CURRENT, "_")]
+  RETURN KEEP(doc, filteredKeys)
 ```
 
 Returns 86 Objects in v15.1.
@@ -734,7 +786,9 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
   FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "campaign"
-  RETURN [doc]
+  LET keys = ATTRIBUTES(doc)
+  LET filteredKeys = keys[* FILTER !STARTS_WITH(CURRENT, "_")]
+  RETURN KEEP(doc, filteredKeys)
 ```
 
 Returns 28 Objects in v15.1.
@@ -807,7 +861,9 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
   FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "x-mitre-data-source"
-  RETURN [doc]
+  LET keys = ATTRIBUTES(doc)
+  LET filteredKeys = keys[* FILTER !STARTS_WITH(CURRENT, "_")]
+  RETURN KEEP(doc, filteredKeys)
 ```
 
 Returns 38 Objects in v15.1.
@@ -854,7 +910,9 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
   FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "x-mitre-data-component"
-  RETURN [doc]
+  LET keys = ATTRIBUTES(doc)
+  LET filteredKeys = keys[* FILTER !STARTS_WITH(CURRENT, "_")]
+  RETURN KEEP(doc, filteredKeys)
 ```
 
 Returns 109 Objects in v15.1.
@@ -940,7 +998,9 @@ FOR doc IN mitre_attack_ics_vertex_collection
   FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND doc.type == "x-mitre-asset"
-  RETURN [doc]
+  LET keys = ATTRIBUTES(doc)
+  LET filteredKeys = keys[* FILTER !STARTS_WITH(CURRENT, "_")]
+  RETURN KEEP(doc, filteredKeys)
 ```
 
 Returns 14 Objects in v15.1.
@@ -1031,6 +1091,23 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
       reference: uniqueKey,
       types: refTypes
     }
+```
+
+```json
+[
+  {
+    "reference": "tactic_refs",
+    "types": [
+      "x-mitre-tactic"
+    ]
+  },
+  {
+    "reference": "x_mitre_data_source_ref",
+    "types": [
+      "x-mitre-data-source"
+    ]
+  }
+]
 ```
 
 Which on a graph looks like this:
