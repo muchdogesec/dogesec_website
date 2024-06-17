@@ -1048,6 +1048,12 @@ FOR doc IN mitre_attack_enterprise_edge_collection
   RETURN length
 ```
 
+```json
+[
+  19438
+]
+```
+
 I can see there are 19438 `relationships` Objects in ATT&CK Enterprise v15.1
 
 I can also easily write a query to identify the different relationships types that exist between objects in the Enterprise domain;
@@ -1055,6 +1061,7 @@ I can also easily write a query to identify the different relationships types th
 ```sql
 FOR doc IN mitre_attack_enterprise_edge_collection
   FILTER doc._stix2arango_note != "automatically imported on collection creation"
+  AND doc._stix2arango_note == "v15.1"
   AND doc._is_ref == false
   AND doc.relationship_type != "revoked-by"
   LET source = DOCUMENT(doc._from)
@@ -1065,6 +1072,76 @@ FOR doc IN mitre_attack_enterprise_edge_collection
     source_ref_type: sourceType,
     target_ref_type: targetType
   }
+```
+
+```json
+[
+  {
+    "relationship_type": "attributed-to",
+    "source_ref_type": "campaign",
+    "target_ref_type": "intrusion-set"
+  },
+  {
+    "relationship_type": "detects",
+    "source_ref_type": "x-mitre-data-component",
+    "target_ref_type": "attack-pattern"
+  },
+  {
+    "relationship_type": "mitigates",
+    "source_ref_type": "course-of-action",
+    "target_ref_type": "attack-pattern"
+  },
+  {
+    "relationship_type": "subtechnique-of",
+    "source_ref_type": "attack-pattern",
+    "target_ref_type": "attack-pattern"
+  },
+  {
+    "relationship_type": "uses",
+    "source_ref_type": "campaign",
+    "target_ref_type": "attack-pattern"
+  },
+  {
+    "relationship_type": "uses",
+    "source_ref_type": "campaign",
+    "target_ref_type": "malware"
+  },
+  {
+    "relationship_type": "uses",
+    "source_ref_type": "campaign",
+    "target_ref_type": "tool"
+  },
+  {
+    "relationship_type": "uses",
+    "source_ref_type": "intrusion-set",
+    "target_ref_type": null
+  },
+  {
+    "relationship_type": "uses",
+    "source_ref_type": "intrusion-set",
+    "target_ref_type": "attack-pattern"
+  },
+  {
+    "relationship_type": "uses",
+    "source_ref_type": "intrusion-set",
+    "target_ref_type": "malware"
+  },
+  {
+    "relationship_type": "uses",
+    "source_ref_type": "intrusion-set",
+    "target_ref_type": "tool"
+  },
+  {
+    "relationship_type": "uses",
+    "source_ref_type": "malware",
+    "target_ref_type": "attack-pattern"
+  },
+  {
+    "relationship_type": "uses",
+    "source_ref_type": "tool",
+    "target_ref_type": "attack-pattern"
+  }
+]
 ```
 
 I can also search all the embedded relationships (`*_ref`, `*_refs`) using CTI Butler (ignoring ones that don't join ATT&CK objects):
@@ -1110,7 +1187,7 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
 ]
 ```
 
-Which on a graph looks like this:
+Both sets of relationship types modelled on a graph looks like this:
 
 <iframe width="768" height="432" src="https://miro.com/app/live-embed/uXjVKBgHZ2I=/?moveToViewport=-1075,-483,1713,911&embedId=788698668005" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
 
