@@ -119,155 +119,193 @@ To test out the TAXII 2.1 Client, you will need a running TAXII 2.1 Server. For 
 
 cti-taxii-client supports both [TAXII 2.0](https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v20.html) and [TAXII 2.1](https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v21.html) in two distinct sub-modules. For this tutorial I will use TAXII 2.1 as most people are using this version (it has been around for 4 years).
 
-To begin with I have written a simple Python script that uses the cti-taxii-client module functions to query the discovery endpoint to find out what is on the server.
+In this post I'll create an `example_scripts` directory with the contents of these scripts shown in this post. One note, I use the `user=read_write_user` / `password=testing123`, you will need to modify these to match your ArangoDB user.
+
+```shell
+mkdir example_scripts
+```
+
+To begin with I have written a simple Python script that uses the cti-taxii-client library to query the discovery endpoint to find out what is on the server.
 
 ```python
-## python3 server-discovery.py
-### import requirements https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v21.html#taxii2client.v21.Server
+# example_scripts/server_discovery.py
+import json
+import base64
 from taxii2client.v21 import Server
 
-server = Server('http://localhost:8000/taxii2/', user='USER', password='PASS')
+# Function to encode user and password in base64
+def encode_credentials(user, password):
+    credentials = f"{user}:{password}"
+    return base64.b64encode(credentials.encode()).decode()
 
-print('server.title : ', server.title)
-print('server.description : ', server.description)
-print('server.contact : ', server.contact)
-print('server.default.url :', server.default.url)
-print('server.custom_properties :', server.custom_properties)
+# Base64 encoded user and password (not needed with taxii2-client)
+# encoded_credentials = encode_credentials('read_write_user', 'testing123')
 
-roots = []
-for api in server.api_roots:
-    roots.append(api.url)
+# URL for the TAXII 2.1 server
+url = 'http://127.0.0.1:8000/api/taxii2/'
 
-print('server.api_roots : ',roots)
+# Create a Server instance
+server = Server(url, user='read_write_user', password='testing123')
+
+# Collect server information
+server_info = {
+    'title': server.title,
+    'description': server.description,
+    'contact': server.contact,
+    'custom_properties': server.custom_properties,
+    'api_roots': [api.url for api in server.api_roots]
+}
+
+# Print server information in JSON format
+print("Request URL:", url)
+print(json.dumps(server_info, indent=4))
+```
+
+```shell
+python3 example_scripts/server_discovery.py
 ```
 
 Which prints;
 
-```txt
-server.title :  Arango TAXII Server
-server.description :  https://github.com/muchdogesec/arango_taxii_server/
-server.contact :  noreply@dogesec.com
-server.default.url : {}
-server.custom_properties : {}
-server.api_roots :  ['http://127.0.0.1:8000/api/taxii2/test_db_1_database/','http://127.0.0.1:8000/api/taxii2/cti_database/','http://127.0.0.1:8000/api/taxii2/_system/','http://127.0.0.1:8000/api/taxii2/taxii_root_demo_database/','http://127.0.0.1:8000/api/taxii2/test_db_13_database/']
+```json
+{
+    "title": "Arango TAXII Server",
+    "description": "https://github.com/muchdogesec/arango_taxii_server/",
+    "contact": "noreply@dogesec.com",
+    "api_roots": [
+        "http://127.0.0.1:8000/api/taxii2/cti_database/",
+        "http://127.0.0.1:8000/api/taxii2/demo_database/"
+    ]
+}
 ```
 
-Three `server.api_roots` are printed (thus accessible to this user). I can now identify what Collections exist in one of the API Roots (I will use `http://127.0.0.1:8000/api/taxii2/cti_database/`).
+Two `api_roots` are printed (thus accessible to this user). I can now identify what Collections exist in one of the API Roots (I will use `http://127.0.0.1:8000/api/taxii2/cti_database/`).
 
 ```python
-## python3 get-collections.py
-### import requirements https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v21.html#taxii2client.v21.ApiRoot
+# example_scripts/get_collections.py
+import json
+import base64
 from taxii2client.v21 import ApiRoot
 
-default = ApiRoot(url='http://127.0.0.1:8000/api/taxii2/cti_database/', user='USER', password='PASS')
+# Function to encode user and password in base64
+def encode_credentials(user, password):
+    credentials = f"{user}:{password}"
+    return base64.b64encode(credentials.encode()).decode()
 
-collection_no = 1
+# Base64 encoded user and password
+encoded_credentials = encode_credentials('read_write_user', 'testing123')
 
-for collections in default.collections:
+# Set the API root URL
+api_root_url = 'http://127.0.0.1:8000/api/taxii2/cti_database/'
 
-    print()
-    print('Collection {}'.format(collection_no))
-    print()
-    print("collection.title: ", collections.title)
-    print("collection.description: ", collections.description)
-    print("collection.id: ", collections.id)
-    print('collection.custom_properties: ',collections.custom_properties)
-    print('collection.can_read: ',collections.can_read)
-    print('collection.can_write: ',collections.can_write)
-    print('collection.media_types: ',collections.media_types)
-    print()
+# Create an ApiRoot instance with encoded credentials
+api_root = ApiRoot(api_root_url, user='read_write_user', password='testing123')
 
-    collection_no += 1
+# Collect and print the collection details in JSON format
+collections_info = {
+    'collections': []
+}
+
+for collection in api_root.collections:
+    collection_info = {
+        'title': collection.title,
+        'description': collection.description,
+        'id': collection.id,
+        'custom_properties': collection.custom_properties,
+        'can_read': collection.can_read,
+        'can_write': collection.can_write,
+        'media_types': collection.media_types,
+    }
+    collections_info['collections'].append(collection_info)
+
+# Print the collections information in JSON format
+print(json.dumps(collections_info, indent=4))
+
 ```
 
-Which prints;
+```shell
+python3 example_scripts/get_collections.py
+```
 
-```txt
-Collection 1
-
-collection.title:  mitre_attack_enterprise
-collection.description:  vertex+edge
-collection.id:  mitre_attack_enterprise
-collection.custom_properties:  {}
-collection.can_read:  True
-collection.can_write:  True
-collection.media_types:  ['application/stix+json;version=2.1']
-
-
-Collection 2
-
-collection.title:  mitre_attack_ics
-collection.description:  vertex+edge
-collection.id:  mitre_attack_ics
-collection.custom_properties:  {}
-collection.can_read:  True
-collection.can_write:  True
-collection.media_types:  ['application/stix+json;version=2.1']
-
-
-Collection 3
-
-collection.title:  mitre_attack_mobile
-collection.description:  vertex+edge
-collection.id:  mitre_attack_mobile
-collection.custom_properties:  {}
-collection.can_read:  True
-collection.can_write:  True
-collection.media_types:  ['application/stix+json;version=2.1']
-
-
-Collection 4
-
-collection.title:  nvd_cve
-collection.description:  vertex+edge
-collection.id:  nvd_cve
-collection.custom_properties:  {}
-collection.can_read:  True
-collection.can_write:  True
-collection.media_types:  ['application/stix+json;version=2.1']
-
-
-Collection 5
-
-collection.title:  sigmahq_rules
-collection.description:  vertex+edge
-collection.id:  sigmahq_rules
-collection.custom_properties:  {}
-collection.can_read:  True
-collection.can_write:  True
-collection.media_types:  ['application/stix+json;version=2.1']
+```json
+{
+    "collections": [
+        {
+            "id": "yara_rules",
+            "title": "yara_rules",
+            "description": "vertex+edge",
+            "can_read": true,
+            "can_write": true,
+            "media_types": [
+                "application/stix+json;version=2.1"
+            ]
+        },
+        {
+            "id": "mitre_attack_enterprise",
+            "title": "mitre_attack_enterprise",
+            "description": "vertex+edge",
+            "can_read": true,
+            "can_write": true,
+            "media_types": [
+                "application/stix+json;version=2.1"
+            ]
+        },
+        {
+            "id": "mitre_attack_mobile",
+            "title": "mitre_attack_mobile",
+            "description": "vertex+edge",
+            "can_read": true,
+            "can_write": true,
+            "media_types": [
+                "application/stix+json;version=2.1"
+            ]
+        },
+        {
+            "id": "mitre_attack_ics",
+            "title": "mitre_attack_ics",
+            "description": "vertex+edge",
+            "can_read": true,
+            "can_write": true,
+            "media_types": [
+                "application/stix+json;version=2.1"
+            ]
+        }
 ```
 
 Now I can start to discover the Objects held by each of these Collections. I will use `mitre_attack_enterprise` to demonstrate.
 
 ```python
-## python3 get_objects.py
-### import requirements https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v21.html#taxii2client.v21.Server
-from taxii2client.v21 import Server
+# example_scripts/get_objects.py
 import json
+from taxii2client.v21 import ApiRoot
 
-server = Server('http://localhost:8000/taxii2/', user='USER', password='PASS')
+# Create an ApiRoot instance with correct URL and credentials
+api_root_url = 'http://127.0.0.1:8000/api/taxii2/cti_database/'
+api_root = ApiRoot(api_root_url, user='read_write_user', password='testing123')
 
-col = {}
+# Dictionary to hold collections
+collections_dict = {}
 
-for api_roots in server.api_roots:
-    api_root = api_roots.collections
-    try:
-        for collections in api_roots.collections:
-            col[collections.id] = collections 
+# Iterate over collections in the specified API root
+try:
+    for collection in api_root.collections:
+        collections_dict[collection.id] = collection
+except Exception as e:
+    print(f"Error processing API root {api_root.url}: {e}")
 
-    except:
-        print('')
-        continue
+# Get the specific collection by ID
+collection_id = 'mitre_attack_enterprise'
+collection = collections_dict.get(collection_id)
 
-collection3 =  col['mitre_attack_enterprise']
+if collection:
+    # Retrieve objects from the collection
+    stix_objects = collection.get_objects()
 
-response = collection3.get_objects()
-# Parse the response body as JSON
-stix_objects = json.loads(response.text)
+    # Print the STIX objects in JSON format
+    print(json.dumps(stix_objects, indent=4))
+else:
+    print(f"Collection with ID {collection_id} not found.")
 
-# Print the STIX objects
-print(json.dumps(stix_objects, indent=4))
 ```
 
 ```json
@@ -376,210 +414,177 @@ print(json.dumps(stix_objects, indent=4))
             "spec_version": "2.1",
             "x_mitre_attack_spec_version": "2.1.0"
         },
-        {
-            "x_mitre_domains": [
-                "enterprise-attack"
-            ],
-            "object_marking_refs": [
-                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-            ],
-            "id": "course-of-action--7a6e5ca3-562f-4185-a323-f3b62b5b2e6b",
-            "type": "course-of-action",
-            "created": "2018-10-17T00:14:20.652Z",
-            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "external_references": [
-                {
-                    "source_name": "mitre-attack",
-                    "url": "https://attack.mitre.org/mitigations/T1177",
-                    "external_id": "T1177"
-                },
-                {
-                    "source_name": "Microsoft LSA Protection Mar 2014",
-                    "description": "Microsoft. (2014, March 12). Configuring Additional LSA Protection. Retrieved November 27, 2017.",
-                    "url": "https://technet.microsoft.com/library/dn408187.aspx"
-                },
-                {
-                    "url": "https://docs.microsoft.com/windows/access-protection/credential-guard/credential-guard-manage",
-                    "description": "Lich, B., Tobin, J., Hall, J. (2017, April 5). Manage Windows Defender Credential Guard. Retrieved November 27, 2017.",
-                    "source_name": "Microsoft Enable Cred Guard April 2017"
-                },
-                {
-                    "url": "https://docs.microsoft.com/windows/access-protection/credential-guard/credential-guard-how-it-works",
-                    "description": "Lich, B., Tobin, J. (2017, April 5). How Windows Defender Credential Guard works. Retrieved November 27, 2017.",
-                    "source_name": "Microsoft Credential Guard April 2017"
-                },
-                {
-                    "source_name": "Microsoft DLL Security",
-                    "description": "Microsoft. (n.d.). Dynamic-Link Library Security. Retrieved November 27, 2017.",
-                    "url": "https://msdn.microsoft.com/library/windows/desktop/ff919712.aspx"
-                }
-            ],
-            "modified": "2019-07-24T19:47:23.978Z",
-            "name": "LSASS Driver Mitigation",
-            "description": "On Windows 8.1 and Server 2012 R2, enable LSA Protection by setting the Registry key <code>HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\RunAsPPL</code> to <code>dword:00000001</code>. (Citation: Microsoft LSA Protection Mar 2014) LSA Protection ensures that LSA plug-ins and drivers are only loaded if they are digitally signed with a Microsoft signature and adhere to the Microsoft Security Development Lifecycle (SDL) process guidance.\n\nOn Windows 10 and Server 2016, enable Windows Defender Credential Guard (Citation: Microsoft Enable Cred Guard April 2017) to run lsass.exe in an isolated virtualized environment without any device drivers. (Citation: Microsoft Credential Guard April 2017)\n\nEnsure safe DLL search mode is enabled <code>HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Session Manager\\SafeDllSearchMode</code> to mitigate risk that lsass.exe loads a malicious code library. (Citation: Microsoft DLL Security)",
-            "x_mitre_deprecated": true,
-            "x_mitre_version": "1.0",
-            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "spec_version": "2.1",
-            "x_mitre_attack_spec_version": "2.1.0"
-        },
-        {
-            "x_mitre_domains": [
-                "enterprise-attack"
-            ],
-            "object_marking_refs": [
-                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-            ],
-            "id": "course-of-action--7aee8ea0-0baa-4232-b379-5d9ce98352cf",
-            "type": "course-of-action",
-            "created": "2018-10-17T00:14:20.652Z",
-            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "external_references": [
-                {
-                    "source_name": "mitre-attack",
-                    "url": "https://attack.mitre.org/mitigations/T1179",
-                    "external_id": "T1179"
-                }
-            ],
-            "modified": "2019-07-24T19:37:27.850Z",
-            "name": "Hooking Mitigation",
-            "description": "This type of attack technique cannot be easily mitigated with preventive controls since it is based on the abuse of operating system design features. For example, mitigating all hooking will likely have unintended side effects, such as preventing legitimate software (i.e., security products) from operating properly. Efforts should be focused on preventing adversary tools from running earlier in the chain of activity and on identifying subsequent malicious behavior.",
-            "x_mitre_deprecated": true,
-            "x_mitre_version": "1.0",
-            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "spec_version": "2.1",
-            "x_mitre_attack_spec_version": "2.1.0"
-        },
-        {
-            "x_mitre_domains": [
-                "enterprise-attack"
-            ],
-            "object_marking_refs": [
-                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-            ],
-            "id": "course-of-action--7bb5fae9-53ad-4424-866b-f0ea2a8b731d",
-            "type": "course-of-action",
-            "created": "2019-06-06T20:15:34.146Z",
-            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "external_references": [
-                {
-                    "source_name": "mitre-attack",
-                    "external_id": "M1020",
-                    "url": "https://attack.mitre.org/mitigations/M1020"
-                }
-            ],
-            "modified": "2019-06-06T20:15:34.146Z",
-            "name": "SSL/TLS Inspection",
-            "description": "Break and inspect SSL/TLS sessions to look at encrypted web traffic for adversary activity.",
-            "x_mitre_version": "1.0",
-            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "spec_version": "2.1",
-            "x_mitre_attack_spec_version": "2.1.0"
-        },
-        {
-            "x_mitre_domains": [
-                "enterprise-attack"
-            ],
-            "object_marking_refs": [
-                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
-            ],
-            "id": "course-of-action--7c1796c7-9fc3-4c3e-9416-527295bf5d95",
-            "type": "course-of-action",
-            "created": "2018-10-17T00:14:20.652Z",
-            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "external_references": [
-                {
-                    "source_name": "mitre-attack",
-                    "url": "https://attack.mitre.org/mitigations/T1043",
-                    "external_id": "T1043"
-                },
-                {
-                    "source_name": "University of Birmingham C2",
-                    "description": "Gardiner, J.,  Cova, M., Nagaraja, S. (2014, February). Command & Control Understanding, Denying and Detecting. Retrieved April 20, 2016.",
-                    "url": "https://arxiv.org/ftp/arxiv/papers/1408/1408.1136.pdf"
-                }
-            ],
-            "modified": "2019-07-24T14:17:58.966Z",
-            "name": "Commonly Used Port Mitigation",
-            "description": "Network intrusion detection and prevention systems that use network signatures to identify traffic for specific adversary malware can be used to mitigate activity at the network level. Signatures are often for unique indicators within protocols and may be based on the specific protocol used by a particular adversary or tool, and will likely be different across various malware families and versions. Adversaries will likely change tool C2 signatures over time or construct protocols in such a way as to avoid detection by common defensive tools. (Citation: University of Birmingham C2)",
-            "x_mitre_deprecated": true,
-            "x_mitre_version": "1.0",
-            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-            "spec_version": "2.1",
-            "x_mitre_attack_spec_version": "2.1.0"
-        }
-    ]
-}
 ```
 
 I've cut down the response for brevity in this post because it contains 50 responses per page. 
 
 You will also see that I need to introduce some pagination logic into the script if I want to obtain all the objects. [The TAXII Client ships with a Class (`as_pages`) for TAXII 2.1 endpoints that support pagination](https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v21.html#taxii2client.v21.as_pages).
 
+In this script I also use the `limit` URL parameter (set to `1`) to only return one result per page, to show what pagination looks like. The following script prints the response from the first two pages.
+
 ```python
-## python3 get_objects_paginated.py
-### import requirements https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v21.html#taxii2client.v21.Server
-### https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v21.html#taxii2client.v21.as_pages
+# example_scripts/get_objects_paginated.py
 from taxii2client.v21 import as_pages, Server
 import json
 
-server = Server('http://localhost:8000/taxii2/', user='USER', password='PASS')
+# Create a Server instance with correct URL and credentials
+server = Server('http://127.0.0.1:8000/api/taxii2/', user='read_write_user', password='testing123')
 
-col = {}
+# Dictionary to hold collections
+collections_dict = {}
 
-for api_roots in server.api_roots:
+# Iterate over API roots and collections
+for api_root in server.api_roots:
     try:
-        for collections in api_roots.collections:
-            col[collections.id] = collections 
-    except:
-        print('')
+        for collection in api_root.collections:
+            collections_dict[collection.id] = collection
+    except Exception as e:
+        print(f"Error processing API root {api_root.url}: {e}")
         continue
 
-collection3 = col['mitre_attack_enterprise']
+# Get the specific collection by ID
+collection_id = 'mitre_attack_enterprise'
+collection = collections_dict.get(collection_id)
 
-page_no = 1
-for envelope in as_pages(collection3.get_objects, per_request=50):
-    print('\nPage # {}'.format(page_no))
-    
-    # Parse the envelope as JSON
-    stix_objects = json.loads(envelope.text)
+if collection:
+    page_no = 1
+    for envelope in as_pages(collection.get_objects, per_request=1):  # Limit set to 1
+        print(f'\nPage # {page_no}')
 
-    # Pretty-print the STIX objects
-    print(json.dumps(stix_objects, indent=4))
+        # Parse the envelope as JSON
+        stix_objects = envelope
 
-    page_no += 1
+        # Pretty-print the STIX objects
+        print(json.dumps(stix_objects, indent=4))
+
+        if page_no >= 2:  # Show only the first 2 pages
+            break
+
+        page_no += 1
+else:
+    print(f"Collection with ID {collection_id} not found.")
+
 ```
 
-Of course one of the other key functions is filtering -- I don't always want all objects returned. This is very easy to do...
+```shell
+python3 example_scripts/get_objects_paginated.py
+```
+
+```json
+Page # 1
+{
+    "more": true,
+    "next": "46984006_undef+0.22373385850816663",
+    "objects": [
+        {
+            "x_mitre_domains": [
+                "enterprise-attack"
+            ],
+            "object_marking_refs": [
+                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+            ],
+            "id": "course-of-action--797312d4-8a84-4daf-9c56-57da4133c322",
+            "type": "course-of-action",
+            "created": "2018-10-17T00:14:20.652Z",
+            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "external_references": [
+                {
+                    "source_name": "mitre-attack",
+                    "url": "https://attack.mitre.org/mitigations/T1199",
+                    "external_id": "T1199"
+                }
+            ],
+            "modified": "2019-07-25T12:30:35.417Z",
+            "name": "Trusted Relationship Mitigation",
+            "description": "Network segmentation can be used to isolate infrastructure components that do not require broad network access. Properly manage accounts and permissions used by parties in trusted relationships to minimize potential abuse by the party and if the party is compromised by an adversary. Vet the security policies and procedures of organizations that are contracted for work that require privileged access to network resources.",
+            "x_mitre_deprecated": true,
+            "x_mitre_version": "1.0",
+            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "spec_version": "2.1",
+            "x_mitre_attack_spec_version": "2.1.0"
+        }
+    ]
+}
+
+Page # 2
+{
+    "more": true,
+    "next": "46984006_undef+0.19274094492717542",
+    "objects": [
+        {
+            "x_mitre_domains": [
+                "enterprise-attack"
+            ],
+            "object_marking_refs": [
+                "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
+            ],
+            "id": "course-of-action--7a14d974-f3d9-4e4e-9b7d-980385762908",
+            "type": "course-of-action",
+            "created": "2018-10-17T00:14:20.652Z",
+            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "external_references": [
+                {
+                    "source_name": "mitre-attack",
+                    "url": "https://attack.mitre.org/mitigations/T1073",
+                    "external_id": "T1073"
+                }
+            ],
+            "modified": "2019-07-24T14:24:44.818Z",
+            "name": "DLL Side-Loading Mitigation",
+            "description": "Update software regularly. Install software in write-protected locations. Use the program sxstrace.exe that is included with Windows along with manual inspection to check manifest files for side-loading vulnerabilities in software.",
+            "x_mitre_deprecated": true,
+            "x_mitre_version": "1.0",
+            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "spec_version": "2.1",
+            "x_mitre_attack_spec_version": "2.1.0"
+        }
+    ]
+}
+```
+
+You can see the more pages exist each time because `more` is set to `true`. The next page id, which the TAXII client (`as_pages`) uses to move to the next page, is defined in the `next` property.
+
+Of course one of the other key functions is filtering -- I don't always want all objects returned. This script filters by the `match[id]` URL parameter for the object `course-of-action--7c1796c7-9fc3-4c3e-9416-527295bf5d95`:
 
 ```python
-## python3 get_objects_filtered.py
-### import requirements https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v21.html#taxii2client.v21.Server
+# example_scripts/get_objects_filtered.py
 from taxii2client.v21 import Server
 import json
 
-server = Server('http://localhost:8000/taxii2/', user='USER', password='PASS')
+# Create a Server instance with correct URL and credentials
+server = Server('http://127.0.0.1:8000/api/taxii2/', user='read_write_user', password='testing123')
 
-col = {}
+# Dictionary to hold collections
+collections_dict = {}
 
-for api_roots in server.api_roots:
+# Iterate over API roots and collections
+for api_root in server.api_roots:
     try:
-        for collections in api_roots.collections:
-            col[collections.id] = collections 
-    except:
-        print('')
+        for collection in api_root.collections:
+            collections_dict[collection.id] = collection
+    except Exception as e:
+        print(f"Error processing API root {api_root.url}: {e}")
         continue
 
-collection3 = col['mitre_attack_enterprise']
+# Get the specific collection by ID
+collection_id = 'mitre_attack_enterprise'
+collection = collections_dict.get(collection_id)
 
-# Retrieve a specific object by ID
-response = collection3.get_object(obj_id='course-of-action--7c1796c7-9fc3-4c3e-9416-527295bf5d95')
+if collection:
+    try:
+        # Retrieve a specific object by ID
+        stix_object = collection.get_object(obj_id='course-of-action--7c1796c7-9fc3-4c3e-9416-527295bf5d95')
 
-# Parse the response body as JSON
-stix_object = json.loads(response.text)
+        # Print the STIX object in JSON format
+        print(json.dumps(stix_object, indent=4))
+    except Exception as e:
+        print(f"Error retrieving object from collection: {e}")
+else:
+    print(f"Collection with ID {collection_id} not found.")
+```
 
-# Print the STIX object
-print(json.dumps(stix_object, indent=4))
+```shell
+python3 example_scripts/get_objects_filtered.py
 ```
 
 ```json
@@ -622,220 +627,297 @@ print(json.dumps(stix_object, indent=4))
 }
 ```
 
-You can see `'more': False` indicating no more pages of objects. However, it is entirely possible there are more than one version of the same Object might exist.
+You can see `'more': False` indicating no more pages of objects.
 
-To demonstrate this, I'll first publish an object (`attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5`) with multiple versions...
-
-cti-taxii-client also supports the [publishing of Objects (add_objects)](https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v21.html#taxii2client.v21.Collection.add_objects). You can pass the STIX Objects using `.add_objects` in a JSON escaped STIX 2.1 Object, as follows...
+By default, the latest version of the object will always be printed unless you ask for specific versions. So lets write a script that checks for versions of this object.
 
 ```python
-## python3 add_objects.py
-### import requirements https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v21.html#taxii2client.v21.Collection.add_objects
-from taxii2client.v21 import Server 
-
-server = Server('http://localhost:8000/taxii2/', user='USER', password='PASS')
-
-col = {}
-
-for api_roots in server.api_roots:
-    api_root = api_roots.collections
-    try:
-        for collections in api_roots.collections:
-            col[collections.id] = collections 
-
-    except:
-        print('')
-        continue
-
-collection3 = col['mitre_attack_enterprise']
-
-x = collection3.add_objects("{\"objects\":[{\"type\":\"attack-pattern\",\"spec_version\":\"2.1\",\"id\":\"attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5\",\"created_by_ref\":\"identity--d2916708-57b9-5636-8689-62f049e9f727\",\"created\":\"2020-01-01T11:21:07.478851Z\",\"modified\":\"2020-01-01T11:21:07.478851Z\",\"name\":\"Spear Phishing\",\"description\":\"Used for tutorial content\",\"object_marking_refs\":[\"marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da\"]},{\"type\":\"attack-pattern\",\"spec_version\":\"2.1\",\"id\":\"attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5\",\"created_by_ref\":\"identity--d2916708-57b9-5636-8689-62f049e9f727\",\"created\":\"2020-01-02T11:21:07.478851Z\",\"modified\":\"2020-01-02T11:21:07.478851Z\",\"name\":\"Spear Phishing Updated ONCE\",\"description\":\"Used for tutorial content\",\"object_marking_refs\":[\"marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da\"]},{\"type\":\"attack-pattern\",\"spec_version\":\"2.1\",\"id\":\"attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5\",\"created_by_ref\":\"identity--d2916708-57b9-5636-8689-62f049e9f727\",\"created\":\"2020-01-03T11:21:07.478851Z\",\"modified\":\"2020-01-03T11:21:07.478851Z\",\"name\":\"Spear Phishing Updated TWICE\",\"description\":\"Used for tutorial content\",\"object_marking_refs\":[\"marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da\"]}]}")
-
-print('status: ', x.status)
-print('id: ', x.id)
-print('failure_count: ', x.failure_count)
-print('pending_count: ', x.pending_count)
-print('success_count: ', x.success_count)
-```
-
-Remember, you must have `can_write` permissions to the collection to add / delete objects from it using TAXII.
-
-This script responds as follows;
-
-```txt
-status:  complete
-id:  2571f72a-520a-485c-8239-c64ef24cc4c4
-failure_count:  0
-pending_count:  0
-success_count:  3
-```
-
-Now, if I just request the object via the Attack Pattern object we'll get one result...
-
-```python
-## python3 get_objects_filtered_2.py
-### import requirements https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v21.html#taxii2client.v21.Server
-from taxii2client.v21 import Server
-import json
-
-server = Server('http://localhost:8000/taxii2/', user='USER', password='PASS')
-
-col = {}
-
-for api_roots in server.api_roots:
-    try:
-        for collections in api_roots.collections:
-            col[collections.id] = collections 
-    except:
-        print('')
-        continue
-
-collection3 = col['mitre_attack_enterprise']
-
-# Retrieve a specific object by ID
-response = collection3.get_object(obj_id='attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5')
-
-# Parse the response body as JSON
-stix_object = json.loads(response.text)
-
-# Print the STIX object
-print(json.dumps(stix_object, indent=4))
-```
-
-```json
-{
-    "more": false,
-    "objects": [
-        {
-            "created": "2020-01-03T11:21:07.478851Z",
-            "created_by_ref": "identity--d2916708-57b9-5636-8689-62f049e9f727",
-            "description": "Used for tutorial content",
-            "id": "attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5",
-            "modified": "2020-01-03T11:21:07.478851Z",
-            "name": "Spear Phishing Updated TWICE",
-            "object_marking_refs": [
-                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
-            ],
-            "spec_version": "2.1",
-            "type": "attack-pattern"
-        }
-    ]
-}
-```
-
-By default, the latest version of the object will always be printed.
-
-So now I need to find the object versions;
-
-```python
-## python3 get_object_versions.py
-### import requirements https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v21.html#taxii2client.v21.Server
-
+# example_scripts/get_object_versions.py
 from taxii2client.v21 import Server, as_pages
 import json
 
-server = Server('http://localhost:8000/taxii2/', user='USER', password='PASS')
+# Create a Server instance with correct URL and credentials
+server = Server('http://127.0.0.1:8000/api/taxii2/', user='read_write_user', password='testing123')
 
-col = {}
+# Dictionary to hold collections
+collections_dict = {}
 
+# Iterate over API roots and collections
 try:
-    for api_roots in server.api_roots:
-        for collection in api_roots.collections:
-            col[collection.id] = collection
+    for api_root in server.api_roots:
+        for collection in api_root.collections:
+            collections_dict[collection.id] = collection
 except Exception as e:
-    print('Error while retrieving collections:', e)
+    print(f"Error while retrieving collections: {e}")
     exit()
 
+# Define the collection ID and object ID
 collection_id = 'mitre_attack_enterprise'
-obj_id = 'attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5'
+obj_id = 'course-of-action--7c1796c7-9fc3-4c3e-9416-527295bf5d95'
 
-if collection_id in col:
-    collection3 = col[collection_id]
+# Retrieve the specific collection by ID
+collection = collections_dict.get(collection_id)
 
+if collection:
     page_no = 1
     try:
-        for envelope in as_pages(collection3.object_versions, obj_id=obj_id, per_request=50):
+        for envelope in as_pages(collection.object_versions, obj_id=obj_id, per_request=50):
             print(f'\nPage # {page_no}')
 
             # Parse the envelope as JSON
-            versions = json.loads(envelope.text)
+            versions = envelope  # `envelope` is already in JSON format
 
             # Pretty-print the STIX object versions
             print(json.dumps(versions, indent=4))
 
             page_no += 1
     except Exception as e:
-        print('Error retrieving or processing object versions:', e)
+        print(f"Error retrieving or processing object versions: {e}")
 else:
-    print(f'Collection with ID {collection_id} not found.')
+    print(f"Collection with ID {collection_id} not found.")
+
+```
+
+```shell
+python3 example_scripts/get_object_version.py
 ```
 
 ```json
-Page # 1
 {
     "more": false,
+    "next": null,
     "versions": [
-        "2020-01-03T11:21:07.478851Z",
-        "2020-01-02T11:21:07.478851Z",
-        "2020-01-01T11:21:07.478851Z"
+        "2018-01-17T12:56:55.080Z",
+        "2018-04-18T17:59:24.739Z",
+        "2018-10-17T00:14:20.652Z",
+        "2019-07-24T14:17:58.966Z"
     ]
 }
 ```
 
-Now I can use multiple filters, to include version, to get a specific version of the object.
+The version returned earlier was the latest `2019-07-24T14:17:58.966Z`. Lets instead request the earliest `2018-01-17T12:56:55.080Z`.
 
 ```python
-## python3 get_specific_object_version.py
-### import requirements https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v21.html#taxii2client.v21.Server
+# example_scripts/get_object_version_oldest.py
 from taxii2client.v21 import Server
 import json
 
-server = Server('http://localhost:8000/taxii2/', user='USER', password='PASS')
+# Create a Server instance with correct URL and credentials
+server = Server('http://127.0.0.1:8000/api/taxii2/', user='read_write_user', password='testing123')
 
-col = {}
+# Dictionary to hold collections
+collections_dict = {}
 
-for api_roots in server.api_roots:
-    api_root = api_roots.collections
+# Iterate over API roots and collections
+for api_root in server.api_roots:
     try:
-        for collections in api_roots.collections:
-            col[collections.id] = collections 
-
-    except:
-        print('')
+        for collection in api_root.collections:
+            collections_dict[collection.id] = collection
+    except Exception as e:
+        print(f"Error processing API root {api_root.url}: {e}")
         continue
 
+# Get the specific collection by ID
 collection_id = 'mitre_attack_enterprise'
+collection = collections_dict.get(collection_id)
 
-def filter(object_id, object_version, collection=collection3):
-    x =  collection.get_object(obj_id=object_id, modified=object_version)
-    return x
+if collection:
+    try:
+        # Retrieve a specific version of an object by ID and version
+        object_id = 'course-of-action--7c1796c7-9fc3-4c3e-9416-527295bf5d95'
+        version = '2018-01-17T12:56:55.080Z'
+        stix_object = collection.get_object(obj_id=object_id, version=version)
 
-get_version = filter('attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5','2020-01-01T11:21:07.478851Z' )
-
-# Parse the response body as JSON
-stix_object = json.loads(get_version.text)
-
-# Print the STIX object
-print(json.dumps(stix_object, indent=4))
+        # Print the STIX object in JSON format
+        print(json.dumps(stix_object, indent=4))
+    except Exception as e:
+        print(f"Error retrieving object from collection: {e}")
+else:
+    print(f"Collection with ID {collection_id} not found.")
 ```
+
 
 ```json
 {
     "more": false,
+    "next": null,
     "objects": [
         {
-            "created": "2020-01-01T11:21:07.478851Z",
-            "created_by_ref": "identity--d2916708-57b9-5636-8689-62f049e9f727",
-            "description": "Used for tutorial content",
-            "id": "attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5",
-            "modified": "2020-01-01T11:21:07.478851Z",
-            "name": "Spear Phishing",
-            "object_marking_refs": [
-                "marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"
+            "created": "2018-01-17T12:56:55.080Z",
+            "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "description": "Network intrusion detection and prevention systems that use network signatures to identify traffic for specific adversary malware can be used to mitigate activity at the network level. Signatures are often for unique indicators within protocols and may be based on the specific protocol used by a particular adversary or tool, and will likely be different across various malware families and versions. Adversaries will likely change tool C2 signatures over time or construct protocols in such a way as to avoid detection by common defensive tools. (Citation: University of Birmingham C2)",
+            "external_references": [
+                {
+                    "source_name": "mitre-attack",
+                    "url": "https://attack.mitre.org/wiki/Technique/T1043",
+                    "external_id": "T1043"
+                },
+                {
+                    "source_name": "University of Birmingham C2",
+                    "description": "Gardiner, J.,  Cova, M., Nagaraja, S. (2014, February). Command & Control Understanding, Denying and Detecting. Retrieved April 20, 2016.",
+                    "url": "https://arxiv.org/ftp/arxiv/papers/1408/1408.1136.pdf"
+                }
             ],
+            "id": "course-of-action--7c1796c7-9fc3-4c3e-9416-527295bf5d95",
+            "modified": "2018-01-17T12:56:55.080Z",
+            "name": "Commonly Used Port Mitigation",
             "spec_version": "2.1",
-            "type": "attack-pattern"
+            "type": "course-of-action",
+            "x_mitre_attack_spec_version": "2.1.0",
+            "x_mitre_domains": [
+                "enterprise-attack"
+            ],
+            "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+            "x_mitre_version": "1.0"
         }
+    ]
+}
+```
+
+cti-taxii-client also supports the [publishing of Objects (add_objects)](https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v21.html#taxii2client.v21.Collection.add_objects). You can pass the STIX Objects using `.add_objects`.
+
+I use a new API root and collection for this request. You'll also see I post the same object (by `id`) three times. This demonstrates how versioning works as three versions of this object will be created as the `modified` time increases between the objects.
+
+```python
+# example_scripts/add_objects.py
+from taxii2client.v21 import Server
+import json
+import requests
+from requests.auth import HTTPBasicAuth
+
+# Create a Server instance with correct URL and credentials
+server = Server('http://127.0.0.1:8000/api/taxii2/', user='read_write_user', password='testing123')
+
+# Dictionary to hold collections
+collections_dict = {}
+
+# Iterate over API roots and collections
+for api_root in server.api_roots:
+    try:
+        for collection in api_root.collections:
+            collections_dict[collection.id] = collection
+    except Exception as e:
+        print(f"Error processing API root {api_root.url}: {e}")
+        continue
+
+# Get the specific collection by ID
+collection_id = 'blog'
+collection = collections_dict.get(collection_id)
+
+if collection:
+    try:
+        # JSON object to be added to the collection
+        objects_to_add = {
+            "objects": [
+                {
+                    "type": "attack-pattern",
+                    "spec_version": "2.1",
+                    "id": "attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5",
+                    "created_by_ref": "identity--d2916708-57b9-5636-8689-62f049e9f727",
+                    "created": "2020-01-01T11:21:07.478851Z",
+                    "modified": "2020-01-01T11:21:07.478851Z",
+                    "name": "Spear Phishing",
+                    "description": "Used for tutorial content",
+                    "object_marking_refs": ["marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"]
+                },
+                {
+                    "type": "attack-pattern",
+                    "spec_version": "2.1",
+                    "id": "attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5",
+                    "created_by_ref": "identity--d2916708-57b9-5636-8689-62f049e9f727",
+                    "created": "2020-01-02T11:21:07.478851Z",
+                    "modified": "2020-01-02T11:21:07.478851Z",
+                    "name": "Spear Phishing Updated ONCE",
+                    "description": "Used for tutorial content",
+                    "object_marking_refs": ["marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"]
+                },
+                {
+                    "type": "attack-pattern",
+                    "spec_version": "2.1",
+                    "id": "attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5",
+                    "created_by_ref": "identity--d2916708-57b9-5636-8689-62f049e9f727",
+                    "created": "2020-01-03T11:21:07.478851Z",
+                    "modified": "2020-01-03T11:21:07.478851Z",
+                    "name": "Spear Phishing Updated TWICE",
+                    "description": "Used for tutorial content",
+                    "object_marking_refs": ["marking-definition--34098fce-860f-48ae-8e50-ebd3cc5e41da"]
+                }
+            ]
+        }
+
+        # Prepare the headers
+        headers = {
+            'Content-Type': 'application/taxii+json;version=2.1',
+            'Accept': 'application/taxii+json;version=2.1'
+        }
+
+        # Print the request URL and headers
+        request_url = collection.url + 'objects/'
+        print(f"Request URL: {request_url}")
+        print("Request Headers:", json.dumps(headers, indent=4))
+
+        # Make the request using requests library
+        response = requests.post(
+            request_url,
+            headers=headers,
+            auth=HTTPBasicAuth('read_write_user', 'testing123'),
+            json=objects_to_add
+        )
+
+        # Print the response in JSON format
+        print(json.dumps(response.json(), indent=4))
+    except Exception as e:
+        print(f"Error adding objects to the collection: {e}")
+else:
+    print(f"Collection with ID {collection_id} not found.")
+```
+
+Remember, you must have `can_write` permissions to the collection to add / delete objects from it using TAXII.
+
+This script responds as follows;
+
+```json
+{
+  "id": "da62e209-cf48-40f3-a687-b89b0cde5546",
+  "status": "pending",
+  "total_count": 3,
+  "success_count": 0,
+  "successes": [],
+  "failure_count": 0,
+  "failures": [],
+  "pending_count": 3,
+  "pendings": [
+    {
+      "message": null,
+      "version": "2020-01-01T11:21:07.478Z",
+      "id": "attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5"
+    },
+    {
+      "message": null,
+      "version": "2020-01-02T11:21:07.478Z",
+      "id": "attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5"
+    },
+    {
+      "message": null,
+      "version": "2020-01-03T11:21:07.478Z",
+      "id": "attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5"
+    }
+  ],
+  "request_timestamp": "2024-06-18T09:48:30.879800Z"
+}
+```
+
+If I use the `get_object_versions.py` script but use the id `attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5` (in place of `course-of-action--7c1796c7-9fc3-4c3e-9416-527295bf5d95`) I get the following;
+
+
+```json
+{
+    "more": false,
+    "next": null,
+    "versions": [
+        "2020-01-01T11:21:07.478Z",
+        "2020-01-02T11:21:07.478Z",
+        "2020-01-03T11:21:07.478Z"
     ]
 }
 ```
@@ -843,28 +925,64 @@ print(json.dumps(stix_object, indent=4))
 Finally, delete operations are also covered by cti-taxii-client.
 
 ```python
-## python3 delete_object.py
-### import requirements https://taxii2client.readthedocs.io/en/latest/api/taxii2client.v21.html#taxii2client.v21.Server
-from taxii2client.v21 import Server 
+# example_scripts/delete_object.py
+from taxii2client.v21 import Server, Collection
+import requests
+from requests.auth import HTTPBasicAuth
 
-server = Server('http://localhost:8000/taxii2/', user='USER', password='PASS')
+# Create a Server instance with correct URL and credentials
+server = Server('http://127.0.0.1:8000/api/taxii2/', user='read_write_user', password='testing123')
 
-col = {}
+# Dictionary to hold collections
+collections_dict = {}
 
-for api_roots in server.api_roots:
-    api_root = api_roots.collections
+# Iterate over API roots and collections
+for api_root in server.api_roots:
     try:
-        for collections in api_roots.collections:
-            col[collections.id] = collections 
-
-    except:
-        print('')
+        for collection in api_root.collections:
+            collections_dict[collection.id] = collection
+    except Exception as e:
+        print(f"Error processing API root {api_root.url}: {e}")
         continue
 
-collection_id = 'mitre_attack_enterprise'
+# Get the specific collection by ID
+collection_id = 'blog'
+collection = collections_dict.get(collection_id)
 
-collection3.delete_object(obj_id='attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5')
-print('Successfully deleted')
+if collection:
+    try:
+        # Prepare the headers
+        headers = {
+            'Content-Type': 'application/taxii+json;version=2.1',
+            'Accept': 'application/taxii+json;version=2.1'
+        }
+
+        # Define the object ID to be deleted
+        object_id = 'attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5'
+
+        # Print the request URL and headers
+        request_url = f"{collection.url}objects/{object_id}/"
+        print(f"Request URL: {request_url}")
+        print("Request Headers:", json.dumps(headers, indent=4))
+
+        # Make the DELETE request using requests library
+        response = requests.delete(
+            request_url,
+            headers=headers,
+            auth=HTTPBasicAuth('read_write_user', 'testing123')
+        )
+
+        # Check for successful deletion
+        if response.status_code == 204:
+            print('Successfully deleted')
+        else:
+            print(f"Failed to delete. Status code: {response.status_code}")
+            print(response.text)
+    except Exception as e:
+        print(f"Error deleting object from the collection: {e}")
+else:
+    print(f"Collection with ID {collection_id} not found.")
+
 ```
 
 Which prints;

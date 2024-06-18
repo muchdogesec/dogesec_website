@@ -2,7 +2,7 @@
 date: 2024-07-25
 last_modified: 2024-07-25
 title: "Mapping CVEs to MITRE ATT&CK"
-description: "Being able to label CVEs with ATT&CK data allows for rich filtering, e.g. what CVEs use ATT&CK Technique X?. Here's how to create those labels in STIX 2.1.'"
+description: "Being able to label CVEs with ATT&CK data allows for rich filtering, e.g. what CVEs use ATT&CK Technique X?. Here's how to create those labels in STIX 2.1."
 categories:
   - PRODUCTS
   - DIY
