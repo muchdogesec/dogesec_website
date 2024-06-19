@@ -922,7 +922,7 @@ If I use the `get_object_versions.py` script but use the id `attack-pattern--6b9
 }
 ```
 
-Finally, delete operations are also covered by cti-taxii-client.
+Finally, delete operations are also covered by cti-taxii-client. Here I delete the object I just created, and all versions of it (`attack-pattern--6b948b5a-3c09-5365-b48a-da95c3964cb5`);
 
 ```python
 # example_scripts/delete_object.py
@@ -973,7 +973,7 @@ if collection:
         )
 
         # Check for successful deletion
-        if response.status_code == 204:
+        if response.status_code == 200:
             print('Successfully deleted')
         else:
             print(f"Failed to delete. Status code: {response.status_code}")
@@ -982,26 +982,12 @@ if collection:
         print(f"Error deleting object from the collection: {e}")
 else:
     print(f"Collection with ID {collection_id} not found.")
-
 ```
 
 Which prints;
 
 ```
 Successfully deleted
-```
-
-The delete behaviour when used like this only deletes the latest version of the object. I can see this by rerunning `get_object_versions.py`;
-
-```json
-Page # 1
-{
-    "more": false,
-    "versions": [
-        "2020-01-02T11:21:07.478851Z",
-        "2020-01-01T11:21:07.478851Z"
-    ]
-}
 ```
 
 ## In summary

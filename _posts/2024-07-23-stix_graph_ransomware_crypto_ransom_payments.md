@@ -71,7 +71,7 @@ Ransomwhere also has an open API to access the data which was all I needed.
 
 With the data structure and data sources decided, I could then start to model the data.
 
-The detailed logic for this is described in the docs for a tool we created for this job, [ransomwhere2stix](https://github.com/muchdogesec/ransomwhere2stix).
+The detailed logic for this is described in the docs for a tool we created for this job, [ransomwhere2stix](https://github.com/muchdogesec/pocs/tree/main/ransomwhere2stix).
 
 Here's the structure of the objects generated;
 
@@ -85,9 +85,9 @@ Using [stix2arango](https://github.com/muchdogesec/stix2arango/) I can import th
 
 ```shell
 git clone https://github.com/muchdogesec/stix2arango/
-git clone https://github.com/muchdogesec/ransomwhere2stix/
+git clone https://github.com/muchdogesec/pocs/ransomwhere2stix/
 mkdir -p stix2arango/cti_knowledge_base_store/ransomwhere
-cp ransomwhere2stix/examples/ransomwhere-bundle.json stix2arango/cti_knowledge_base_store/ransomwhere/ransomwhere-bundle.json
+cp pocs/ransomwhere2stix/examples/ransomwhere-bundle.json stix2arango/cti_knowledge_base_store/ransomwhere/ransomwhere-bundle.json
 cd stix2arango
 # set up stix2arango
 python3 stix2arango.py \
