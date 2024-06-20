@@ -2,7 +2,7 @@
 date: 2024-06-21
 last_modified: 2024-06-21
 title: "Creating Your Own Custom STIX Objects"
-description: "Sometimes the default STIX 2.1 objects will not be broad enough for your needs. This post describes how you can extend STIX. Python code included."
+description: "Sometimes the default STIX 2.1 objects will not be broad enough for your needs. This post describes how you can extend STIX."
 categories:
   - DIY
   - TUTORIAL
@@ -23,13 +23,15 @@ redirect_from:
 
 ## tl;dr
 
+Learn when to create custom objects or properties. Learn how to do it using real code examples.
+
+## Overview
+
 [The STIX 2.1 Specification covers many of the most common cyber threat intelligence concepts](/blog/beginners-guide-stix-objects/).
 
 However, there are times when the default STIX 2.1 objects will not be broad enough for your needs.
 
 For these cases, you can use [STIX Extensions](https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_32j232tfvtly) which allow you to define new STIX Objects and Properties by creating an Extension Definition that defines a schema for them.
-
-## Overview
 
 There are two ways to extend STIX using STIX Extensions, depending on what you want to achieve.
 

@@ -23,6 +23,10 @@ redirect_from:
 
 ## tl;dr
 
+Install cti-taxii-client. Install Arango TAXII Server. Learn from example code about how TAXII clients work.
+
+## Overview
+
 TAXII, or Trusted Automated Exchange of Intelligence Information, is a protocol designed specifically to share and consume cyber threat intelligence. 
 
 TAXII enables organisations to share CTI by defining a single API that all upstream and downstream technology can be built to support, removing the issues of trying to support many individual API designs.

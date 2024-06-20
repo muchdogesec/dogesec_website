@@ -27,9 +27,7 @@ redirect_from:
 
 ## tl;dr
 
-RSS and ATOM feeds are problematic for two reasons; 1) lack of history, 2) contain limited post content.
-
-We built some software to fix that.
+RSS and ATOM feeds are problematic for two reasons; 1) lack of history, 2) contain limited post content. We built some software to fix that.
 
 ## But why?
 

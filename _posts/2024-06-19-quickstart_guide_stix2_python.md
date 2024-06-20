@@ -2,7 +2,7 @@
 date: 2024-06-19
 last_modified: 2024-06-19
 title: "A Quickstart Guide for the STIX 2 Python Library"
-description: "A post full of code examples that will give you everything you need to start creating STIX objects to make it simple to share your threat research."
+description: "If you're an intelligence producer, the STIX2 Python library will prove invaluable to you."
 categories:
   - DIY
   - TUTORIAL
@@ -21,6 +21,10 @@ redirect_from:
 ---
 
 ## tl;dr
+
+A post full of code examples that will give you everything you need to start creating STIX objects to make it simple to share your threat research.
+
+## Overview
 
 The STIX 2 Python library from OASIS is a set of Python APIs that allow you to quickly start creating STIX 2.1 content. It is likely to be the tool you use most as a STIX 2.1  producer.
 

@@ -23,6 +23,8 @@ redirect_from:
 
 STIX 2.1 allows you to tell stories by connecting objects together to form the story-line of cyber actors, campaigns, incidents, and much more.
 
+## Some STIX "stories"
+
 Mandiant's APT1 Report as STIX objects...
 
 <div class="stixview" data-stix-url="/assets/images/blog/2024-06-17/bundle--cf20f99b-3ed2-4a9f-b4f1-d660a7fc8241.json" data-stix-allow-dragdrop="false" data-show-idrefs="false" data-show-markings="true" data-show-sidebar="true" data-graph-layout="cise" data-caption="Mandiant's APT1 Report" data-disable-mouse-zoom="false" data-graph-width="100%" data-graph-height="85vh" data-show-footer="true"></div>

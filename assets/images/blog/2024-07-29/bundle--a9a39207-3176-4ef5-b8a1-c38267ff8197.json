@@ -1,0 +1,338 @@
+{
+    "type": "bundle",
+    "id": "bundle--a9a39207-3176-4ef5-b8a1-c38267ff8197",
+    "objects": [
+        {
+            "type": "marking-definition",
+            "spec_version": "2.1",
+            "id": "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+            "created": "2022-10-01T00:00:00.000Z",
+            "definition_type": "TLP:CLEAR",
+            "extensions": {
+                "extension-definition--60a3c5c5-0d10-413e-aab3-9e08dde9e88d": {
+                    "extension_type": "property-extension",
+                    "tlp_2_0": "clear"
+                }
+            }
+        },
+        {
+            "type": "marking-definition",
+            "spec_version": "2.1",
+            "id": "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created_by_ref": "identity--9779a2db-f98c-5f4b-8d08-8ee04e02dbb5",
+            "created": "2020-01-01T00:00:00.000Z",
+            "definition_type": "statement",
+            "definition": {
+                "statement": "This object was created using: https://github.com/muchdogesec/txt2stix"
+            },
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--97ba4e8b-04f6-57e8-8f6e-3a0f0a7dc0fb"
+            ]
+        },
+        {
+            "type": "identity",
+            "spec_version": "2.1",
+            "id": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created_by_ref": "identity--9779a2db-f98c-5f4b-8d08-8ee04e02dbb5",
+            "created": "2020-01-01T00:00:00.000Z",
+            "modified": "2020-01-01T00:00:00.000Z",
+            "name": "txt2stix",
+            "description": "https://github.com/muchdogsec/txt2stix",
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--97ba4e8b-04f6-57e8-8f6e-3a0f0a7dc0fb"
+            ],
+            "identity_class": "system",
+            "sectors": [
+                "technology"
+            ],
+            "contact_information": "https://www.dogesec.com/contact/"
+        },
+        {
+            "type": "report",
+            "spec_version": "2.1",
+            "id": "report--a9a39207-3176-4ef5-b8a1-c38267ff8197",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-06-20T16:09:21.355063Z",
+            "modified": "2024-06-20T16:09:21.355063Z",
+            "name": "Card Runners Report",
+            "description": "> The carding group Card Runners used the following cards obtained from the Fake Real Plastic (http://igvmwp3544wpnd6u.onion) to withdraw cash from ATMs across the world: \n>\n> * 5507211322378981\n> * 4571717066493601",
+            "published": "2024-06-20T17:09:21.355045Z",
+            "object_refs": [
+                "indicator--7d3254b5-1e7c-41e1-904a-dd8c9ae2c82c",
+                "extension-definition--7922f91a-ee77-58a5-8217-321ce6a2d6e0",
+                "bank-card--b3263c9e-3149-555f-917a-ff71a588b84e",
+                "relationship--9785c25e-5d9b-4b22-b619-543be0cd0c7c",
+                "indicator--e92d3970-ff8b-453d-b14b-c84292981122",
+                "bank-card--e44f298b-cd7e-5a17-8b3b-801b7e9e5aa3",
+                "relationship--8ae5212e-a049-430b-a7bf-b31b649daf65",
+                "relationship--4464378b-eae4-4864-848c-e721dfc42f00"
+            ],
+            "labels": [
+                "blog"
+            ],
+            "confidence": 80,
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "description": "report--a9a39207-3176-4ef5-b8a1-c38267ff8197"
+                },
+                {
+                    "source_name": "txt2stix Report MD5",
+                    "external_id": "bba619bd100d180a3cd02e9b6ca421b4"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "marking-definition",
+            "spec_version": "2.1",
+            "id": "marking-definition--e828b379-4e03-4974-9ac4-e53a884c97c1",
+            "created": "2022-10-01T00:00:00.000Z",
+            "definition_type": "TLP:RED",
+            "extensions": {
+                "extension-definition--60a3c5c5-0d10-413e-aab3-9e08dde9e88d": {
+                    "extension_type": "property-extension",
+                    "tlp_2_0": "red"
+                }
+            }
+        },
+        {
+            "type": "note",
+            "spec_version": "2.1",
+            "id": "note--6dcaf289-86ac-4473-b1ae-ef36f81b76ff",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-06-20T16:09:21.355063Z",
+            "modified": "2024-06-20T16:09:21.355063Z",
+            "abstract": "txt2stix Config: report--a9a39207-3176-4ef5-b8a1-c38267ff8197",
+            "content": "WyJ0eHQyc3RpeC5weSIsICItLXJlbGF0aW9uc2hpcF9tb2RlIiwgImFpIiwgIi0taW5wdXRfZmlsZSIsICJjYXJkLXJ1bm5lcnMudHh0IiwgIi0tbmFtZSIsICJDYXJkIFJ1bm5lcnMgUmVwb3J0IiwgIi0tdGxwX2xldmVsIiwgImNsZWFyIiwgIi0tY29uZmlkZW5jZSIsICI4MCIsICItLWxhYmVsIiwgImJsb2ciLCAiLS11c2VfZXh0cmFjdGlvbnMiLCAicGF0dGVybl9iYW5rX2NhcmRfbWFzdGVyY2FyZCxwYXR0ZXJuX2JhbmtfY2FyZF92aXNhLHBhdHRlcm5fYmFua19jYXJkX2FtZXgscGF0dGVybl9iYW5rX2NhcmRfdW5pb25fcGF5LHBhdHRlcm5fYmFua19jYXJkX2RpbmVycyxwYXR0ZXJuX2JhbmtfY2FyZF9qY2IscGF0dGVybl9iYW5rX2NhcmRfZGlzY292ZXIsbG9va3VwX3RocmVhdF9hY3RvcixwYXR0ZXJuX3VybCJd",
+            "object_refs": [
+                "report--a9a39207-3176-4ef5-b8a1-c38267ff8197"
+            ],
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--a9a39207-3176-4ef5-b8a1-c38267ff8197"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--e828b379-4e03-4974-9ac4-e53a884c97c1",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "indicator",
+            "spec_version": "2.1",
+            "id": "indicator--7d3254b5-1e7c-41e1-904a-dd8c9ae2c82c",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-06-20T16:09:21.355063Z",
+            "modified": "2024-06-20T16:09:21.355063Z",
+            "name": "Mastercard: 5507211322378981",
+            "indicator_types": [
+                "unknown"
+            ],
+            "pattern": "[ bank-card:number = '5507211322378981' ]",
+            "pattern_type": "stix",
+            "pattern_version": "2.1",
+            "valid_from": "2024-06-20T16:09:21.355063Z",
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "description": "report--a9a39207-3176-4ef5-b8a1-c38267ff8197"
+                },
+                {
+                    "source_name": "txt2stix extraction ID",
+                    "description": "pattern_bank_card_mastercard_1.0.0"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "extension-definition",
+            "spec_version": "2.1",
+            "id": "extension-definition--7922f91a-ee77-58a5-8217-321ce6a2d6e0",
+            "created_by_ref": "identity--9779a2db-f98c-5f4b-8d08-8ee04e02dbb5",
+            "created": "2020-01-01T00:00:00.000Z",
+            "modified": "2020-01-01T00:00:00.000Z",
+            "name": "Bank Card",
+            "description": "This extension creates a new SCO that can be used to represent bank cards.",
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--97ba4e8b-04f6-57e8-8f6e-3a0f0a7dc0fb"
+            ],
+            "schema": "https://raw.githubusercontent.com/muchdogesec/stix4doge/main/schemas/scos/bank-card.json",
+            "version": "1.0",
+            "extension_types": [
+                "new-sco"
+            ]
+        },
+        {
+            "type": "bank-card",
+            "spec_version": "2.1",
+            "id": "bank-card--b3263c9e-3149-555f-917a-ff71a588b84e",
+            "number": "5507211322378981",
+            "extensions": {
+                "extension-definition--7922f91a-ee77-58a5-8217-321ce6a2d6e0": {
+                    "extension_type": "new-sco"
+                }
+            }
+        },
+        {
+            "type": "relationship",
+            "spec_version": "2.1",
+            "id": "relationship--9785c25e-5d9b-4b22-b619-543be0cd0c7c",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-06-20T16:09:21.355063Z",
+            "modified": "2024-06-20T16:09:21.355063Z",
+            "relationship_type": "related-to",
+            "source_ref": "bank-card--b3263c9e-3149-555f-917a-ff71a588b84e",
+            "target_ref": "indicator--7d3254b5-1e7c-41e1-904a-dd8c9ae2c82c",
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--a9a39207-3176-4ef5-b8a1-c38267ff8197"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "indicator",
+            "spec_version": "2.1",
+            "id": "indicator--e92d3970-ff8b-453d-b14b-c84292981122",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-06-20T16:09:21.355063Z",
+            "modified": "2024-06-20T16:09:21.355063Z",
+            "name": "Visa: 4571717066493601",
+            "indicator_types": [
+                "unknown"
+            ],
+            "pattern": "[ bank-card:number = '4571717066493601' ]",
+            "pattern_type": "stix",
+            "pattern_version": "2.1",
+            "valid_from": "2024-06-20T16:09:21.355063Z",
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "description": "report--a9a39207-3176-4ef5-b8a1-c38267ff8197"
+                },
+                {
+                    "source_name": "txt2stix extraction ID",
+                    "description": "pattern_bank_card_visa_1.0.0"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "bank-card",
+            "spec_version": "2.1",
+            "id": "bank-card--e44f298b-cd7e-5a17-8b3b-801b7e9e5aa3",
+            "number": "4571717066493601",
+            "extensions": {
+                "extension-definition--7922f91a-ee77-58a5-8217-321ce6a2d6e0": {
+                    "extension_type": "new-sco"
+                }
+            }
+        },
+        {
+            "type": "relationship",
+            "spec_version": "2.1",
+            "id": "relationship--8ae5212e-a049-430b-a7bf-b31b649daf65",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-06-20T16:09:21.355063Z",
+            "modified": "2024-06-20T16:09:21.355063Z",
+            "relationship_type": "related-to",
+            "source_ref": "bank-card--e44f298b-cd7e-5a17-8b3b-801b7e9e5aa3",
+            "target_ref": "indicator--e92d3970-ff8b-453d-b14b-c84292981122",
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--a9a39207-3176-4ef5-b8a1-c38267ff8197"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "note",
+            "spec_version": "2.1",
+            "id": "note--8f73a620-a9fd-4764-b952-4167d5825437",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-06-20T16:09:21.355063Z",
+            "modified": "2024-06-20T16:09:21.355063Z",
+            "abstract": "txt2stix Extractions: report--a9a39207-3176-4ef5-b8a1-c38267ff8197",
+            "content": "eyJsb29rdXAiOiB7ImV4dHJhY3Rpb25zIjoge319LCAicGF0dGVybiI6IHsiZXh0cmFjdGlvbnMiOiB7ImV4dHJhY3Rpb25fMCI6IHsidmFsdWUiOiAiNTUwNzIxMTMyMjM3ODk4MSIsICJ0eXBlIjogInBhdHRlcm5fYmFua19jYXJkX21hc3RlcmNhcmQiLCAidmVyc2lvbiI6ICIxLjAuMCIsICJzdGl4X21hcHBpbmciOiAiYmFuay1jYXJkIiwgInN0YXJ0X2luZGV4IjogWzBdLCAiaWQiOiAiZXh0cmFjdGlvbl8wIn0sICJleHRyYWN0aW9uXzEiOiB7InZhbHVlIjogIjQ1NzE3MTcwNjY0OTM2MDEiLCAidHlwZSI6ICJwYXR0ZXJuX2JhbmtfY2FyZF92aXNhIiwgInZlcnNpb24iOiAiMS4wLjAiLCAic3RpeF9tYXBwaW5nIjogImJhbmstY2FyZCIsICJzdGFydF9pbmRleCI6IFswXSwgImlkIjogImV4dHJhY3Rpb25fMSJ9fX19",
+            "object_refs": [
+                "report--a9a39207-3176-4ef5-b8a1-c38267ff8197"
+            ],
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--a9a39207-3176-4ef5-b8a1-c38267ff8197"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--e828b379-4e03-4974-9ac4-e53a884c97c1",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "note",
+            "spec_version": "2.1",
+            "id": "note--b1462b83-4604-4c0c-bd4f-f3681b741080",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-06-20T16:09:21.355063Z",
+            "modified": "2024-06-20T16:09:21.355063Z",
+            "abstract": "txt2stix Relationships: report--a9a39207-3176-4ef5-b8a1-c38267ff8197",
+            "content": "eyJyZWxhdGlvbnNoaXBzIjogeyJyZWxhdGlvbnNoaXBfMCI6IHsic291cmNlX3JlZiI6ICJleHRyYWN0aW9uXzAiLCAidGFyZ2V0X3JlZiI6ICJleHRyYWN0aW9uXzEiLCAicmVsYXRpb25zaGlwX3R5cGUiOiAicmVsYXRlZC10byJ9fX0=",
+            "object_refs": [
+                "report--a9a39207-3176-4ef5-b8a1-c38267ff8197"
+            ],
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--a9a39207-3176-4ef5-b8a1-c38267ff8197"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--e828b379-4e03-4974-9ac4-e53a884c97c1",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        },
+        {
+            "type": "relationship",
+            "spec_version": "2.1",
+            "id": "relationship--4464378b-eae4-4864-848c-e721dfc42f00",
+            "created_by_ref": "identity--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5",
+            "created": "2024-06-20T16:09:21.355063Z",
+            "modified": "2024-06-20T16:09:21.355063Z",
+            "relationship_type": "related-to",
+            "source_ref": "bank-card--b3263c9e-3149-555f-917a-ff71a588b84e",
+            "target_ref": "bank-card--e44f298b-cd7e-5a17-8b3b-801b7e9e5aa3",
+            "external_references": [
+                {
+                    "source_name": "txt2stix job ID",
+                    "external_id": "report--a9a39207-3176-4ef5-b8a1-c38267ff8197"
+                }
+            ],
+            "object_marking_refs": [
+                "marking-definition--94868c89-83c2-464b-929b-a1a8aa3c8487",
+                "marking-definition--f92e15d9-6afc-5ae2-bb3e-85a1fd83a3b5"
+            ]
+        }
+    ]
+}

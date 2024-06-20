@@ -37,15 +37,9 @@ redirect_from:
 
 ## tl;dr
 
-CTI Butler ingests STIX structured data from popular CTI knowledge-bases.
-
-Here is a diagram that shows where data comes from, how it is stored, and finally, how it is joined.
+[CTI Butler](https://www.ctibutler.com/) ingests STIX structured data from popular CTI knowledge-bases and links it altogether as follows...
 
 <iframe width="768" height="432" src="https://miro.com/app/live-embed/uXjVKQPtpEk=/?moveToViewport=-2094,-1337,3988,1782&embedId=331762124208" frameborder="0" scrolling="no" allow="fullscreen; clipboard-read; clipboard-write" allowfullscreen></iframe>
-
-[Here is where you can find CTI Butler](https://www.ctibutler.com/).
-
-Want to know more? Read on...
 
 ## Does this not already exist?
 

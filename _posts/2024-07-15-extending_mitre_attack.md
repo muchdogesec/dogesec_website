@@ -24,13 +24,13 @@ redirect_from:
 
 ## tl;dr
 
-Some time ago, [MITRE Engenuity announced the ATT&CK Workbench](https://medium.com/mitre-engenuity/).
-
-The workbench can perform a lot of functions, though arguably its most useful is the ability to create new objects or extend existing objects with new content. Matrices, techniques, tactics, mitigations, groups, and software can all be created and edited.
-
-Think of it as an extension of core ATT&CK.
+Create new ATT&CK objects. Update existing objects. Matrices, techniques, tactics, mitigations, groups, and software can all be created and edited.
 
 ## Overview
+
+Some time ago, [MITRE Engenuity announced the ATT&CK Workbench](https://medium.com/mitre-engenuity/).
+
+Think of it as an extension of core ATT&CK.
 
 Using the ATT&CK Workbench you can extend the knowledge base according to your own needs, or even an entirely new dataset aligned with ATT&CK terminology so that it's usable with other ATT&CK tools.
 

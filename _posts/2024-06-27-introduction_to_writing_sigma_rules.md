@@ -24,7 +24,7 @@ redirect_from:
 
 ## tl;dr
 
-Learn how to write Sigma Rules. Learn how to upload and share Sigma Rules (using tools that support STIX).
+Learn how to write Sigma Rules, and then how to upload and share Sigma Rules (using tools that support STIX).
 
 ## Overview
 

@@ -12,6 +12,7 @@ tags: [
 products:
     - stix2arango
     - cve2stix
+    - arango_cti_processor
     - CTI Butler
 author_staff_member: david-greenwood
 image: /assets/images/blog/2024-07-25/header.png
@@ -24,7 +25,7 @@ redirect_from:
 
 ## tl;dr
 
-Take CVEs in STIX format. Take ATT&CK data in STIX format. Join them using STIX SROs. Search for CVEs by ATT&CK ID.
+Take CVEs in STIX format. Take ATT&CK data in STIX format. Join them using STIX SROs. Search for CVEs by ATT&CK IDs.
 
 ## Overview
 

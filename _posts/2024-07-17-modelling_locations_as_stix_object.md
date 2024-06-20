@@ -2,7 +2,7 @@
 date: 2024-07-17
 last_modified: 2024-07-17
 title: "The Problems with Modelling Countries as STIX Objects"
-description: "And how to solve them."
+description: "And why we built a small utility to solve them for you."
 categories:
   - PRODUCTS
 tags: [
@@ -22,11 +22,11 @@ redirect_from:
 
 ## tl;dr
 
-When intelligence producers talk about countries in their reports, there is no standard framework to represent them. This makes it incredibly hard to link reports talking about the same location. For example, on provider might set location as North Korea, another as NK, another as DPRK... you get the idea.
-
-We set out to try an fix that. Here's how...
+Take the list of recognised countries and regions. Map them as normalised STIX objects. Make them available to everyone so that the CTI world has a single way of representing them.
 
 ## Overview
+
+When intelligence producers talk about countries in their reports, there is no standard framework to represent them. This makes it incredibly hard to link reports talking about the same location. For example, on provider might set location as North Korea, another as NK, another as DPRK... you get the idea.
 
 Referring to a country or region in a standardised way is not a problem that the CTI world suffers from.
 

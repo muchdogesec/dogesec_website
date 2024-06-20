@@ -27,6 +27,10 @@ redirect_from:
 
 ## tl;dr
 
+Install the MITRE ATT&CK Navigator. Explore, annotate and compare ATT&CK objects.
+
+## Overview
+
 The MITRE ATT&CK Navigator is a web-based tool for annotating and exploring the MITRE ATT&CK framework. It is very useful for both offensive and defensive activities.
 
 Here is a nice overview of the ATT&CK Navigator presented by MITRE:

@@ -24,9 +24,7 @@ redirect_from:
 
 ## tl;dr
 
-We wanted to distribute STIX 2.1 objects to our community using TAXII. We built a TAXII server coupled with a storage layer to do this. It is called Arango TAXII Server. This post describes how you can get started with it.
-
-[If you just want to start using Arango TAXII Server, go here](https://github.com/muchdogesec/arango_taxii_server/).
+We wanted to distribute STIX 2.1 objects to our community using TAXII. We built a TAXII server coupled with a storage layer to do this. It is called [Arango TAXII Server](https://github.com/muchdogesec/arango_taxii_server/). This post describes how you can get started with it.
 
 ## Optional pre-reading
 

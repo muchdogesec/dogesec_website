@@ -2,7 +2,7 @@
 date: 2024-07-08
 last_modified: 2024-07-08
 title: "Getting Started with MITRE TRAM"
-description: "Take threat report. Upload threat report. Automatically identify ATT&CK Techniques."
+description: "MITRE TRAM automatically extracts ATT&CK Techniques being discussed in reports."
 categories:
   - TUTORIAL
   - PRODUCTS
@@ -29,13 +29,13 @@ redirect_from:
 
 ## tl;dr
 
-Manually annotating threat reports with MITRE ATT&CK is useful, but very tedious.
-
-With AI going mainstream, there are lots of ways this process can be automated. This post explains how.
+Take threat report. Upload threat report. Automatically identify ATT&CK Techniques.
 
 ## Background
 
 A significant amount of intelligence available today is still shared through blogs, advisories and research articles, which requires further processing to make it machine readable (and usable by SIEM and SOAR tools). It's why we built [Obstracts](https://www.obstracts.com/) and [Stixify](https://www.stixify.com/).
+
+Manually annotating threat reports with MITRE ATT&CK like this is useful, but very tedious.
 
 Natural language processing (NLP) refers to the branch of computer science—and more specifically, the branch of artificial intelligence or AI—concerned with giving computers the ability to understand text and spoken words in much the same way human beings can.
 

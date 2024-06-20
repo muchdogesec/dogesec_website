@@ -2,7 +2,7 @@
 date: 2024-06-24
 last_modified: 2024-06-24
 title: "Constructing STIX Indicator Patterns"
-description: "Learn how to write STIX Patterns to create detection rules. It's easy."
+description: "The STIX 2.1 Indicator SDO specification is flexible enough to allow for a range of detection languages which means you can share your detection content with tools that understand STIX."
 categories:
   - DIY
   - TUTORIAL
@@ -25,6 +25,10 @@ redirect_from:
 
 ## tl;dr
 
+Learn how to write STIX Patterns to create detection rules using some real examples.
+
+## Overview
+
 The ultimate use of intelligence is to try and defend or counteract for it. For example, understanding how to put in place network defenses or to mitigate an attack that has been successful in part of its initiatives.
 
 Part of this is to ensure you are able to detect security events (to ensure the bit of intelligence you are looking at has not already impacted you).
@@ -33,9 +37,9 @@ Many of you will be familiar with detection languages in SIEMs to search for mal
 
 In STIX 2.1, [Indicator SDOs](https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_muftrcpnf89v) must contain a `pattern` Property that can be used to describe suspicious or malicious cyber activity.
 
-## Overview
+## STIX Patterns
 
-The STIX 2.1 Indicator SDO specification is flexible enough to allow for a range of detection language (`pattern_type`) as defined in the [Pattern Type Vocabulary](https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_9lfdvxnyofxw), these are;
+The STIX 2.1 Indicator SDO specification is flexible enough to allow for a range of detection languages (`pattern_type`) as defined in the [Pattern Type Vocabulary](https://docs.oasis-open.org/cti/stix/v2.1/os/stix-v2.1-os.html#_9lfdvxnyofxw), these are;
 
 * `pcre`: Perl Compatible Regular Expressions language
 * `sigma`: SIGMA language

@@ -1,12 +1,14 @@
 ---
 date: 2024-07-23
 last_modified: 2024-07-23
-title: "A STIX Graph of Ransomware Payments"
-description: "Modelling ransomwhe.re data as STIX 2.1 object so that is can be explored as a graph."
+title: "Graphing of Ransomware Payments"
+description: "Modelling ransomwhe.re data as STIX 2.1 object so that it can be explored as a graph."
 categories:
-  - PRODUCTS
+  - POC
 tags: [
-    STIX
+    STIX,
+    cryptocurrency,
+    bitcoin
 ]
 products:
     - ransomwhere2stix
@@ -40,7 +42,7 @@ I wanted to represent the data as STIX, as you might have guessed from the other
 
 However, STIX has no current SCOs to represent cryptocurrency concepts in [its core specification](https://docs.oasis-open.org/cti/stix/v2.1/stix-v2.1.html).
 
-So I set out to create some custom extensions. If you're new to creating custom STIX objects, [read this first](create_custom_stix_objects).
+So I set out to create some custom extensions. If you're new to creating custom STIX objects, [read this first](/blog/create_custom_stix_objects).
 
 In short I created two new objects:
 
@@ -448,5 +450,7 @@ FOR malware IN ransomwhere_vertex_collection
 It is important to stress here that this work should be considered a proof-of-concept to show how our new STIX crypto objects can be used to model criminal transactions related to Ransomware (or any crime really).
 
 You can do better than me!
+
+Once you have a cryptocurrency transaction or wallet represented as STIX objects you can use them, across your research. Link them to new malware strings, actors, reports, etc. to build your graph of intelligence.
 
 If this post has given you enough inspiration to start using STIX to represent crypto in your research, then I've achieved my objective.
