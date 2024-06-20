@@ -33,7 +33,9 @@ One of the biggest problems these organisations face is fraud. The amount of fra
 
 As a starting point, many companies are tracking stolen card data sold on online card forums.
 
-The problem is, this is often just a list of card numbers, expiry dates, card security codes, and card holder names in a huge csv format. Many simply grab these numbers and store them in relational databases which they lookup against their own 
+The problem is, this is often just a list of card numbers, expiry dates, card security codes, and card holder names in a huge csv format. Many organisations simply grab these numbers (from an intel feed), store them in relational databases (or a TIP), which they then cross-reference against their card numbers. This is not only time consuming, but it also needs to be done by every single banking organisation each time on their own data.
+
+What if each card in a breach could easily be enriched with the issuer data, and more?...
 
 ## The anatomy of a bank card
 
