@@ -1,7 +1,7 @@
 ---
 date: 2024-07-29
 last_modified: 2024-07-29
-title: "A Graph of Credit Card Fraud"
+title: "A Graph of Credit Card Fraud using STIX"
 description: "Using STIX 2.1 to track fraudulent credit card transactions so that they can be traversed on a graph."
 categories:
   - PRODUCTS
@@ -29,11 +29,11 @@ Turn bank card numbers into STIX 2.1 objects. Explore the credit card data in th
 
 As you might expect, a lot of the users of our tools work for financial service companies.
 
-One of the biggest problems these organisations face is fraud. The amount of fraudulent transactions is increasing, despite more advance methods to detect them. What's worse, issuers of bank accounts and cards will soon be liable for even more of the cost of fraud.
+One of the biggest problems these organisations face is fraud. The number of fraudulent transactions continues to increase, despite more advance methods to detect them.
 
-As a starting point, many companies are tracking stolen card data sold on online card forums.
+As a starting point to combat this problem, many companies are tracking stolen card data sold on online card forums.
 
-The problem is, this is often just a list of card numbers, expiry dates, card security codes, and card holder names in a huge csv format. Many organisations simply grab these numbers (from an intel feed), store them in relational databases (or a TIP), which they then cross-reference against their card numbers. This is not only time consuming, but it also needs to be done by every single banking organisation each time on their own data.
+The problem is, this is often just a list of card numbers, expiry dates, card security codes, and card holder names in a huge csv format. Many organisations simply grab these numbers (from an intel feed), store them in relational databases (or a TIP), which they then cross-reference against their card numbers. This is not only time consuming, but it also incredibly inefficient -- it needs to be done by every single banking organisation each time
 
 What if each card in a breach could easily be enriched with the issuer data, and more?...
 

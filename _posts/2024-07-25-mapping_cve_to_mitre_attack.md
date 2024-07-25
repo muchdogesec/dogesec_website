@@ -45,7 +45,7 @@ The problem is, how do you take a CVE and link it ATT&CK.
 
 For this use-case we only case about the Vulnerability object (because these contain the most descriptive information about each CVE).
 
-For example to get all CVEs published in 2018
+For example to get all CVEs published in 2018;
 
 ```sql
 FOR doc IN nvd_cve_vertex_collection
@@ -128,41 +128,131 @@ curl --location 'https://services.nvd.nist.gov/rest/json/cves/2.0?cveId=CVE-2015
                 "lastModified": "2020-01-22T15:28:32.637",
 ```
 
-Back to the subject at hand...
+Now, above I've only shown searches that get a subset of data. This script below will get you all CVE records in a .csv file from [CTI Butler](https://www.ctibutler.com/), ready for the next step (make sure to replace `USERNAME` and `PASSWORD`);
+
+```python
+import csv
+import requests
+
+# Configuration
+arangodb_host = "https://database.ctibutler.com:8529"
+database_name = "cti_database"
+arangodb_user = "USERNAME"
+arangodb_password = "PASSWORD"
+chunk_size = 1000  # Number of documents per page
+
+# AQL query template
+aql_query = """
+FOR doc IN nvd_cve_vertex_collection
+    FILTER doc.type == "vulnerability"
+    SORT doc.modified DESC
+    RETURN {
+        id: doc.id,
+        modified: doc.modified,
+        name: doc.name,
+        description: doc.description
+    }
+"""
+
+# Initialize CSV file
+csv_file = "nvd_cve_vertex_collection.csv"
+csv_headers = ["id", "modified", "name", "description"]
+
+with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
+    writer = csv.DictWriter(file, fieldnames=csv_headers)
+    writer.writeheader()
+
+    # Pagination loop using cursor
+    query_url = f"{arangodb_host}/_db/{database_name}/_api/cursor"
+    response = requests.post(query_url, json={"query": aql_query, "batchSize": chunk_size}, auth=(arangodb_user, arangodb_password))
+    response.raise_for_status()
+
+    result = response.json()
+    total_fetched = 0
+
+    while True:
+        documents = result.get("result", [])
+
+        # Write the current chunk to the CSV file
+        if documents:
+            for doc in documents:
+                writer.writerow(doc)
+            total_fetched += len(documents)
+            print(f"Fetched {len(documents)} documents, total fetched: {total_fetched}")
+        else:
+            break
+
+        # Check if we have more documents to fetch
+        if not result.get("hasMore"):
+            break
+
+        # Fetch the next batch using the cursor ID
+        cursor_id = result.get("id")
+        response = requests.put(f"{query_url}/{cursor_id}", auth=(arangodb_user, arangodb_password))
+        response.raise_for_status()
+        result = response.json()
+
+print(f"Total fetched documents: {total_fetched}")
+print(f"Results have been written to {csv_file}")
+```
+
+The csv file will look like this;
+
+```txt
+id,modified,name,description
+vulnerability--a6069912-af3f-5775-98f7-e810c11df4a9,2024-06-30T23:15:02.563Z,CVE-2024-1135,"Gunicorn fails to properly validate Transfer-Encoding headers, leading to HTTP Request Smuggling (HRS) vulnerabilities. By crafting requests with conflicting Transfer-Encoding headers, attackers can bypass security restrictions and access restricted endpoints. This issue is due to Gunicorn's handling of Transfer-Encoding headers, where it incorrectly processes requests with multiple, conflicting Transfer-Encoding headers, treating them as chunked regardless of the final encoding specified. This vulnerability allows for a range of attacks including cache poisoning, session manipulation, and data exposure."
+vulnerability--ca2fca16-3e75-5bce-b90c-d8092572f236,2024-06-30T23:15:02.443Z,CVE-2023-48733,An insecure default to allow UEFI Shell in EDK2 was left enabled in Ubuntu's EDK2. This allows an OS-resident attacker to bypass Secure Boot.
+```
 
 ## Using an AI model to map descriptions to ATT&CK objects
 
-Most `description` values are very short.
+Most `description` values for CVEs are very short.
 
 Though I am still confident a well trained AI model will be more than capable.
 
 As a POC I'll start with a generic model, GPT-4o;
 
 ```
-<CVE ID>
-<CVE DESCRIPTION>
+In the following prompts I will provide data as follows
 
-What MITRE ATT&CK concepts are being described in this text?
+{
+    "cve_id": "<CVE ID>",
+    "cve_description": "<CVE DESCRIPTION>"
+}
 
-For each ATT&CK concept identified, print your response as only JSON in the following structure:
+For each record I want you to describe which MITRE ATT&CK objects are being described in the cve_description?
+
+Be as specific as you can when assigning MITRE ATT&CK classifications. Use the description of the ATT&CK objects when classifying them against the CVE description provided in the prompt.
+
+For example, if the text contained 'Android' it is not specific enough to link it to an ATT&CK object, but it is useful in determining the domain, mobile. Another example, if the text contained 'Started to download data from an Android device', it would be highly indicative of TA0036, Exfiltration.
+
+Similarly, text like 'obtain sensitive information' is not enough information to assign an ATT&CK classification. However, 'obtain sensitive information by taking screenshots', would be highly indicative of T1513, Screen Capture.
+
+It could be the case that the CVE description is not descriptive enough to assign any ATT&CK classifications.
+
+For each ATT&CK object identified, print your response as only JSON in the following structure:
 
 {
     "CVE_ID": {
         "detected_objects": [
         {
+            attack_domain: "DOMAIN",
             attack_id: "ID",
             attack_name: "NAME",
-            confidence_score: "SCORE"
+            confidence_score: "SCORE",
+            analysis: "WHY YOU CAME TO THIS DECISION"
         },
         {
+            attack_domain: "DOMAIN",
             attack_id: "ID",
             attack_name: "NAME",
-            confidence_score: "SCORE"
+            confidence_score: "SCORE",
+            analysis: "WHY YOU CAME TO THIS DECISION"
         }
     ]
 }
 
-Where confidence score defines how sure you are this technique or subtechnique is being described in the text (between 0 [lowest] and 1 [highest])`
+Where confidence score defines how sure you are this object is being described in the text (between 0 [lowest] and 1 [highest])
 ```
 
 Lets try the above command with the description of CVE-2016-6587:
@@ -176,25 +266,31 @@ Which GPT-4o returns;
     "CVE-2016-6587": {
         "detected_objects": [
         {
+            "attack_domain": "Enterprise",
             "attack_id": "T1005",
             "attack_name": "Data from Local System",
-            "confidence_score": 0.9
+            "confidence_score": 0.9,
+            "analysis": "Text contains 'the mid.dat file stored on the SD card'"
         },
         {
+            "attack_domain": "Enterprise",
             "attack_id": "T1586",
             "attack_name": "Compromise Accounts",
-            "confidence_score": 0.7
+            "confidence_score": 0.7,
+            "analysis": "Text contains 'which could let a local malicious user obtain sensitive information'"
         },
         {
+            "attack_domain": "Enterprise",
             "attack_id": "T1589",
             "attack_name": "Gather Victim Identity Information",
-            "confidence_score": 0.7
+            "confidence_score": 0.7,
+            "analysis": "Text contains 'which could let a local malicious user obtain sensitive information'"
         }
     ]
 }
 ```
 
-At this point I'm not looking for model accuracy because the model can be swapped out easily as required -- we have some much better locally trained models on ATT&CK data. There are also off-the-shelf models available to you, e.g. [those that ship with TRAM](/blog/getting_started_mitre_tram).
+At this point I'm not looking for model accuracy because the model can be swapped out easily as required (I'd argue this output is fairly poor). Why? We have some much better locally trained models on ATT&CK data. There are also better off-the-shelf models available to you, e.g. [those that ship with TRAM](/blog/getting_started_mitre_tram).
 
 The point being is the general concept here works, and also allows me to set a confidence threshold in my code for allowing only high confidence ATT&CK matches.
 
@@ -204,8 +300,25 @@ HOWEVER, I do appreciate that many reading this won't have the resources, datase
 
 To do this you can use CTI Butler to grab a list of all relevant ATT&CK objects you want the AI to be aware of;
 
-```sql
-FOR doc IN mitre_attack_enterprise_vertex_collection
+```python
+import csv
+import requests
+
+# Configuration
+arangodb_host = "https://database.ctibutler.com:8529"
+database_name = "cti_database"
+arangodb_user = "USERNAME"
+arangodb_password = "PASSWORD"
+chunk_size = 1000  # Number of documents per page
+
+collections = [
+    "mitre_attack_enterprise_vertex_collection",
+    "mitre_attack_ics_vertex_collection",
+    "mitre_attack_mobile_vertex_collection"
+]
+
+aql_template = """
+FOR doc IN {collection}
   FILTER doc._stix2arango_note != "automatically imported on collection creation"
   AND doc._stix2arango_note == "v15.1"
   AND (
@@ -225,40 +338,69 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
     RETURN extRef.external_id
   )[0]
   SORT attack_id
-  RETURN {
+  RETURN {{
+    id: doc.id,
     attack_id: attack_id,
     name: doc.name,
     description: doc.description
-  }
+  }}
+"""
+
+csv_headers = ["id", "attack_id", "name", "description"]
+
+for collection in collections:
+    # Initialize CSV file
+    csv_file = f"{collection}.csv"
+    
+    with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
+        writer = csv.DictWriter(file, fieldnames=csv_headers)
+        writer.writeheader()
+
+        # Pagination loop using cursor
+        aql_query = aql_template.format(collection=collection)
+        query_url = f"{arangodb_host}/_db/{database_name}/_api/cursor"
+        response = requests.post(query_url, json={"query": aql_query, "batchSize": chunk_size}, auth=(arangodb_user, arangodb_password))
+        response.raise_for_status()
+
+        result = response.json()
+        total_fetched = 0
+
+        while True:
+            documents = result.get("result", [])
+
+            # Write the current chunk to the CSV file
+            if documents:
+                for doc in documents:
+                    writer.writerow(doc)
+                total_fetched += len(documents)
+                print(f"Fetched {len(documents)} documents from {collection}, total fetched: {total_fetched}")
+            else:
+                break
+
+            # Check if we have more documents to fetch
+            if not result.get("hasMore"):
+                break
+
+            # Fetch the next batch using the cursor ID
+            cursor_id = result.get("id")
+            response = requests.put(f"{query_url}/{cursor_id}", auth=(arangodb_user, arangodb_password))
+            response.raise_for_status()
+            result = response.json()
+
+    print(f"Total fetched documents from {collection}: {total_fetched}")
+    print(f"Results have been written to {csv_file}")
+
 ```
 
-Returns;
+Will create 3 CSVs (for each ATT&CK domain) that look like this;
 
-```json
-[
-  {
-    "attack_id": "C0001",
-    "name": "Frankenstein",
-    "description": "[Frankenstein](https://attack.mitre.org/campaigns/C0001) was described by security researchers as a highly-targeted campaign conducted by moderately sophisticated and highly resourceful threat actors in early 2019. The unidentified actors primarily relied on open source tools, including [Empire](https://attack.mitre.org/software/S0363). The campaign name refers to the actors' ability to piece together several unrelated open-source tool components.(Citation: Talos Frankenstein June 2019)"
-  },
-  {
-    "attack_id": "C0002",
-    "name": "Night Dragon",
-    "description": "[Night Dragon](https://attack.mitre.org/campaigns/C0002) was a cyber espionage campaign that targeted oil, energy, and petrochemical companies, along with individuals and executives in Kazakhstan, Taiwan, Greece, and the United States. The unidentified threat actors searched for information related to oil and gas field production systems, financials, and collected data from SCADA systems. Based on the observed techniques, tools, and network activities, security researchers assessed the campaign involved a threat group based in China.(Citation: McAfee Night Dragon)"
-  },
-  {
-    "attack_id": "C0004",
-    "name": "CostaRicto",
-    "description": "[CostaRicto](https://attack.mitre.org/campaigns/C0004) was a suspected hacker-for-hire cyber espionage campaign that targeted multiple industries worldwide, with a large number being financial institutions. [CostaRicto](https://attack.mitre.org/campaigns/C0004) actors targeted organizations in Europe, the Americas, Asia, Australia, and Africa, with a large concentration in South Asia (especially India, Bangladesh, and Singapore), using custom malware, open source tools, and a complex network of proxies and SSH tunnels.(Citation: BlackBerry CostaRicto November 2020)"
-  },
-  {
-    "attack_id": "C0005",
-    "name": "Operation Spalax",
-    "description": "[Operation Spalax](https://attack.mitre.org/campaigns/C0005) was a campaign that primarily targeted Colombian government organizations and private companies, particularly those associated with the energy and metallurgical industries. The [Operation Spalax](https://attack.mitre.org/campaigns/C0005) threat actors distributed commodity malware and tools using generic phishing topics related to COVID-19, banking, and law enforcement action. Security researchers noted indicators of compromise and some infrastructure overlaps with other campaigns dating back to April 2018, including at least one separately attributed to [APT-C-36](https://attack.mitre.org/groups/G0099), however identified enough differences to report this as separate, unattributed activity.(Citation: ESET Operation Spalax Jan 2021)  "
-  },
+```txt
+id,attack_id,name,description
+campaign--26d9ebae-de59-427f-ae9a-349456bae4b1,C0001,Frankenstein,"[Frankenstein](https://attack.mitre.org/campaigns/C0001) was described by security researchers as a highly-targeted campaign conducted by moderately sophisticated and highly resourceful threat actors in early 2019. The unidentified actors primarily relied on open source tools, including [Empire](https://attack.mitre.org/software/S0363). The campaign name refers to the actors' ability to piece together several unrelated open-source tool components.(Citation: Talos Frankenstein June 2019)"
+campaign--ae407e32-87e0-4d92-8705-3ae25d504d8a,C0002,Night Dragon,"[Night Dragon](https://attack.mitre.org/campaigns/C0002) was a cyber espionage campaign that targeted oil, energy, and petrochemical companies, along with individuals and executives in Kazakhstan, Taiwan, Greece, and the United States. The unidentified threat actors searched for information related to oil and gas field production systems, financials, and collected data from SCADA systems. Based on the observed techniques, tools, and network activities, security researchers assessed the campaign involved a threat group based in China.(Citation: McAfee Night Dragon)"
 ```
 
-In total there are 1991 ATT&CK objects returned by this query. You can of course trim it to only include objects you care about, e.g. only using `doc.type == "attack-pattern"` will return just Techniques and Subtechniques
+In total there are 1991 ATT&CK objects returned by this query (for the Enterprise domain). You can of course trim it to only include objects you care about, e.g. only using `doc.type == "attack-pattern"` in the `aql_template` will return just Techniques and Subtechniques
 
 ```sql
 FOR doc IN mitre_attack_enterprise_vertex_collection
@@ -284,12 +426,37 @@ FOR doc IN mitre_attack_enterprise_vertex_collection
 ]
 ```
 
-To do this you could use a prompt along the lines of:
+You could then prime the LLM with the prompt (ensure you submit the appropriate files too);
 
 ```txt
-Here is a list of MITRE ATT&CK technique and sub-technique objects with their; ID, name, and description.
+These three csv files contain version 15.1 of the MITRE ATT&CK framework. Each csv represents a different ATT&CK domain, as follows;
 
-<BATCH OF CTI BUTLER RECORDS>
+1. mitre_attack_enterprise_vertex_collection.csv: This domain is designed to cover tactics and techniques used in traditional enterprise IT environments. It encompasses a broad range of devices, networks, and applications typically found in business settings.
+mitre_attack_ics_vertex_collection.csv: This domain focuses on tactics and techniques specifically tailored to mobile devices such as smartphones and tablets.
+mitre_attack_enterprise_vertex_collection.csv: This domain is designed to address tactics and techniques used against industrial control systems, which are crucial for operating critical infrastructure such as power grids, water treatment facilities, manufacturing plants, and other industrial environments.
+
+All csv files have the schema;
+
+id,attack_id,name,description
+
+Where;
+
+* id: is the STIX ID for the record
+* attack_id: is the MITRE ATT&CK ID for the record
+* name: is the name of the record
+* description: is a description of the record
+
+The attack_id related to different ATT&CK objects types as follows;
+
+* Tactics have IDs in format: TANNNN
+* Techniques have IDs in format: TNNNN 
+* Sub-techniques have IDs in format: TNNNN.NNN
+* Mitigations have IDs in format: MNNNN (and sometimes TNNNN)
+* Groups have IDs in format: GNNNN
+* Software have IDs in format: SNNNN
+* Tools also have IDs in format: SNNNN
+* Campaigns have IDs in format: CNNNN
+* Data Sources have IDs in format: DSNNNN
 ```
 
 ## Linking AI response with MITRE ATT&CK STIX objects
